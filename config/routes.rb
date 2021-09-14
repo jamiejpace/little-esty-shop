@@ -6,4 +6,10 @@ Rails.application.routes.draw do
     resources :items, only: :index
     resources :invoices, only: :index
   end
+
+  namespace :admin do
+    get '/', to: 'dashboard#index', as: 'dashboard'
+    resources :merchants, only: :index
+    resources :invoices, only: :index
+  end
 end
