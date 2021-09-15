@@ -68,12 +68,16 @@ RSpec.describe 'admin dashboard' do
     it 'has pending_invoices' do
       within '#pending-invoices' do
         [inv1, inv3, inv5].each do |inv|
+          expected = inv.created_at.strftime("%A, %B %e, %Y")
           expect(page).to have_link(inv.id)
+          expect(page).to have_content(expected)
         end
 
         [inv2, inv4, inv6].each do |inv|
-          expect(page).not_to have_content(inv.id)
+          expect(page).not_to have_content("Invoice #{inv.id},")
         end
+
+        save_and_open_page
       end
     end
 

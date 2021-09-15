@@ -34,6 +34,8 @@ RSpec.describe Invoice, type: :model do
       it '#pending_invoices' do
         expect(Invoice.pending_invoices).to eq([invoice1, invoice2])
       end
+
+
     end
   end
 end

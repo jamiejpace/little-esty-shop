@@ -13,6 +13,6 @@ class Invoice < ApplicationRecord
   }
 
   scope :pending_invoices, -> {
-    where(status: 0)
+    where(status: 0).order(:created_at)
   }
 end
