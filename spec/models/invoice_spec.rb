@@ -19,8 +19,10 @@ RSpec.describe Invoice, type: :model do
       let!(:item1) { create :item, { merchant_id: merchant.id } }
       let!(:item2) { create :item, { merchant_id: merchant.id } }
       let!(:item3) { create :item, { merchant_id: merchant.id } }
-      let!(:invoice1) { create :invoice, { customer_id: customer.id} }
-      let!(:invoice2) { create :invoice, { customer_id: customer.id} }
+      let!(:invoice1) { create :invoice, { customer_id: customer.id, status: 0} }
+      let!(:invoice2) { create :invoice, { customer_id: customer.id, status: 0} }
+      let!(:invoice3) { create :invoice, { customer_id: customer.id, status: 1} }
+      let!(:invoice4) { create :invoice, { customer_id: customer.id, status: 2} }
       let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
       let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id } }
       let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice2.id } }
@@ -28,6 +30,12 @@ RSpec.describe Invoice, type: :model do
       it '#for_merchant' do
         expect(Invoice.for_merchant(merchant)).to eq([invoice1, invoice2])
       end
+
+      it '#pending_invoices' do
+        expect(Invoice.pending_invoices).to eq([invoice1, invoice2])
+      end
+
+
     end
   end
 end

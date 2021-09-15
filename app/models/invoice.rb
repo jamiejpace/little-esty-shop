@@ -11,4 +11,8 @@ class Invoice < ApplicationRecord
   scope :for_merchant, ->(merchant) {
     joins(:items).where('items.merchant_id = ?', merchant.id).order(:created_at).distinct
   }
+
+  scope :pending_invoices, -> {
+    where(status: 0).order(:created_at)
+  }
 end
