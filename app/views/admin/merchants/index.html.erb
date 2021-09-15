@@ -1,7 +1,12 @@
 <h1>Admin Merchants</h1>
 
 <% @merchants.each do |merch| %>
-  <div id="<%= merch.id %>">
+  <div id=<%= "merch-#{merch.id}" %>>
     <%= link_to merch.name, admin_merchant_path(merch) %>
+    <% if merch.status == 'enabled' %>
+      <%= button_to "Disable #{merch.name}", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'disabled' } } %>
+    <% else %>
+      <%= button_to "Enable #{merch.name}", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'enabled' } } %>
+    <% end %>
   </div>
 <% end %>
