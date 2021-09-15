@@ -17,7 +17,6 @@ class Invoice < ApplicationRecord
   }
 
   scope :merchant_fav_customers, ->(merchant) {
-    for_merchant(merchant).joins(:customer, :transactions).group("customers.id").order("count(transactions.id) desc").limit(5).pluck("customers.first_name, count(transactions.id
-    )")
+    merchant_invoices(merchant).joins(:customer, :transactions).where("transactions.result = 0").group("customers.id").order("count(transactions.id) desc").limit(5).pluck("customers.first_name ||' '|| customers.last_name")
   }
 end
