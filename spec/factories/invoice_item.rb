@@ -5,6 +5,6 @@ FactoryBot.define do
     quantity { Faker::Number.within(range: 1..100) }
     unit_price { Faker::Number.within(range: 1..100000) }
     status { [0, 1, 2].sample }
-    id { Faker::Number.unique.within(range: 1..100) }
+    id { Faker::Number.unique.within(range: 1..1000000) }
   end
 end
