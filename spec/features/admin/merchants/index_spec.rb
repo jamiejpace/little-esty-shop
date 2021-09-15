@@ -26,15 +26,19 @@ RSpec.describe 'Admin Merchant Index' do
     end
 
     it 'changes button dynamically when enable/disabled clicked' do
-      # save_and_open_page
       click_on "Disable #{@merchant_1.name}"
 
       @merchant_1.reload
 
       expect(page).to have_button("Enable #{@merchant_1.name}")
-
-
       expect(@merchant_1.status).to eq('disabled')
+
+      click_on "Enable #{@merchant_1.name}"
+
+      @merchant_1.reload
+
+      expect(page).to have_button("Disable #{@merchant_1.name}")
+      expect(@merchant_1.status).to eq('enabled')
     end
   end
 end
