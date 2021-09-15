@@ -69,7 +69,7 @@ RSpec.describe 'admin dashboard' do
       within '#pending-invoices' do
         [inv1, inv3, inv5].each do |inv|
           expected = inv.created_at.strftime("%A, %B %e, %Y")
-          expect(page).to have_link(inv.id)
+          expect(page).to have_link(inv.id.to_s)
           expect(page).to have_content(expected)
         end
 
@@ -77,13 +77,12 @@ RSpec.describe 'admin dashboard' do
           expect(page).not_to have_content("Invoice #{inv.id},")
         end
 
-        save_and_open_page
       end
     end
 
     it 'links are correctly routed' do
       within '#pending-invoices' do
-        click_on inv5.id
+        click_on inv5.id.to_s
       end
 
       expect(current_path).to eq(admin_invoice_path(inv5))
