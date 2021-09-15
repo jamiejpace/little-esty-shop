@@ -5,5 +5,6 @@
 
 Top 5 customers:
 <% @fav_customers.each do |fav| %><br>
-  <%= fav %>
+    Customer Name: <%= fav[0] %><br>
+    Number of Successful Transactions: <%= fav[1] %><br>
 <% end %>
