@@ -31,7 +31,7 @@ RSpec.describe 'Admin Merchant Index' do
 
       @merchant_1.reload
 
-      expect(page).to have_content("Enable #{@merchant_1.name}")
+      expect(page).to have_button("Enable #{@merchant_1.name}")
 
 
       expect(@merchant_1.status).to eq('disabled')
