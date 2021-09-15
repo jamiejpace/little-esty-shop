@@ -15,7 +15,7 @@ class Admin::MerchantsController < ApplicationController
     @merchant = Merchant.find(params[:id])
     if @merchant.update(merchant_params)
       flash[:success] = "Successfully updated merchant"
-      update_redirect
+      updates_redirect_location
     else
       flash[:alert] = "Invalid name, fool"
       redirect_to edit_admin_merchant_path(@merchant)
@@ -27,7 +27,7 @@ class Admin::MerchantsController < ApplicationController
     params.require(:merchant).permit(:name, :status)
   end
 
-  def update_redirect
+  def updates_redirect_location
     if params[:merchant][:status].present?
       redirect_to admin_merchants_path
     else
