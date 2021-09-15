@@ -8,7 +8,16 @@ class Invoice < ApplicationRecord
 
   enum status: ['in progress', 'completed', 'cancelled']
 
+  scope :merchant_invoices, ->(merchant) {
+    joins(:items).where('items.merchant_id = ?', merchant)
+  }
+
   scope :for_merchant, ->(merchant) {
-    joins(:items).where('items.merchant_id = ?', merchant.id).order(:created_at).distinct
+    merchant_invoices(merchant).order(:created_at).distinct
+  }
+
+  scope :merchant_fav_customers, ->(merchant) {
+    for_merchant(merchant).joins(:customer, :transactions).group("customers.id").order("count(transactions.id) desc").limit(5).pluck("customers.first_name, count(transactions.id
+    )")
   }
 end
