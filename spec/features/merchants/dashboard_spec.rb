@@ -118,5 +118,13 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         expect(page).to have_content("Number of Successful Transactions: 1")
       end
     end
+    describe 'Items Ready to Ship' do
+      it 'lists names of ordered items not shipped' do
+
+        expect(page).to have_content("Items Ready to Ship:")
+        expect(page).to have_content("Item Name:")
+        # expect(page).to have_content("Invoice ID:")
+      end
+    end
   end
 end
