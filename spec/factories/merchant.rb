@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :merchant, class: Merchant do
     name { Faker::Company.unique.name }
-    id { Faker::Number.unique.within(range: 1..100) }
+    id { Faker::Number.unique.within(range: 1..100000) }
   end
 end
