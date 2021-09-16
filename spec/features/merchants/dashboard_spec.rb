@@ -44,22 +44,22 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     let!(:transaction14) { create :transaction, { invoice_id: invoice14.id, result: 0 } }
     let!(:transaction15) { create :transaction, { invoice_id: invoice15.id, result: 0 } }
     let!(:transaction16) { create :transaction, { invoice_id: invoice16.id, result: 0 } }
-    let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
-    let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice2.id } }
-    let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice3.id } }
-    let!(:inv_item4) { create :invoice_item, { item_id: item3.id, invoice_id: invoice4.id } }
-    let!(:inv_item5) { create :invoice_item, { item_id: item3.id, invoice_id: invoice5.id } }
-    let!(:inv_item6) { create :invoice_item, { item_id: item3.id, invoice_id: invoice6.id } }
-    let!(:inv_item7) { create :invoice_item, { item_id: item3.id, invoice_id: invoice7.id } }
-    let!(:inv_item8) { create :invoice_item, { item_id: item3.id, invoice_id: invoice8.id } }
-    let!(:inv_item9) { create :invoice_item, { item_id: item3.id, invoice_id: invoice9.id } }
-    let!(:inv_item10) { create :invoice_item, { item_id: item3.id, invoice_id: invoice10.id } }
-    let!(:inv_item11) { create :invoice_item, { item_id: item3.id, invoice_id: invoice11.id } }
-    let!(:inv_item12) { create :invoice_item, { item_id: item3.id, invoice_id: invoice12.id } }
-    let!(:inv_item13) { create :invoice_item, { item_id: item3.id, invoice_id: invoice13.id } }
-    let!(:inv_item14) { create :invoice_item, { item_id: item3.id, invoice_id: invoice14.id } }
-    let!(:inv_item15) { create :invoice_item, { item_id: item3.id, invoice_id: invoice15.id } }
-    let!(:inv_item16) { create :invoice_item, { item_id: item3.id, invoice_id: invoice16.id } }
+    let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, status: 2 } }
+    let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice2.id, status: 0 } }
+    let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice3.id, status: 0 } }
+    let!(:inv_item4) { create :invoice_item, { item_id: item3.id, invoice_id: invoice4.id, status: 0 } }
+    let!(:inv_item5) { create :invoice_item, { item_id: item3.id, invoice_id: invoice5.id, status: 2 } }
+    let!(:inv_item6) { create :invoice_item, { item_id: item3.id, invoice_id: invoice6.id, status: 2 } }
+    let!(:inv_item7) { create :invoice_item, { item_id: item3.id, invoice_id: invoice7.id, status: 2 } }
+    let!(:inv_item8) { create :invoice_item, { item_id: item3.id, invoice_id: invoice8.id, status: 2 } }
+    let!(:inv_item9) { create :invoice_item, { item_id: item3.id, invoice_id: invoice9.id, status: 2 } }
+    let!(:inv_item10) { create :invoice_item, { item_id: item3.id, invoice_id: invoice10.id, status: 2 } }
+    let!(:inv_item11) { create :invoice_item, { item_id: item3.id, invoice_id: invoice11.id, status: 2 } }
+    let!(:inv_item12) { create :invoice_item, { item_id: item3.id, invoice_id: invoice12.id, status: 2 } }
+    let!(:inv_item13) { create :invoice_item, { item_id: item3.id, invoice_id: invoice13.id, status: 2 } }
+    let!(:inv_item14) { create :invoice_item, { item_id: item3.id, invoice_id: invoice14.id, status: 1 } }
+    let!(:inv_item15) { create :invoice_item, { item_id: item3.id, invoice_id: invoice15.id, status: 1 } }
+    let!(:inv_item16) { create :invoice_item, { item_id: item3.id, invoice_id: invoice16.id, status: 1 } }
 
     before :each do
       visit merchant_dashboard_path(merchant1.id)
@@ -118,13 +118,22 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         expect(page).to have_content("Number of Successful Transactions: 1")
       end
     end
+
     describe 'Items Ready to Ship' do
       it 'lists names of ordered items not shipped' do
+        return_value = [
+          ["Jamie", 21, "pending"]
+        ]
+
+        allow(InvoiceItem).to receive(:merch_items_ship_ready).and_return(return_value)
+        visit merchant_dashboard_path(merchant1)
 
         expect(page).to have_content("Items Ready to Ship:")
-        expect(page).to have_content("Item Name:")
-        # expect(page).to have_content("Invoice ID:")
+        expect(page).to have_content("Item Name: Jamie")
+        expect(page).to have_content("Invoice ID: 21")
+        expect(page).to have_no_content(item1.name)
       end
     end
+
   end
 end
