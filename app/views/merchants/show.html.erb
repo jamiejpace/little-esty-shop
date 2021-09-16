@@ -12,5 +12,5 @@
 <h5>Items Ready to Ship:</h5>
 <% @invoices.each do |invoice| %><br>
     Item Name: <%= invoice[0] %><br>
-    Invoice ID: <%= invoice[1] %><br>
+    Invoice ID: <%= link_to "#{invoice[1]}", merchant_invoice_path(@merchant.id, invoice[1]) %><br>
 <% end %>
