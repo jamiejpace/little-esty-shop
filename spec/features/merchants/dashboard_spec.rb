@@ -65,7 +65,7 @@ RSpec.describe 'Merchant Dashboard Show Page' do
       visit merchant_dashboard_path(merchant1.id)
     end
 
-    it 'shows merchant dashbaord attributes' do
+    it 'shows merchant dashboard attributes' do
 
       expect(page).to have_content(merchant1.name)
     end
@@ -132,6 +132,12 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         expect(page).to have_content("Item Name: Jamie")
         expect(page).to have_content("Invoice ID: 21")
         expect(page).to have_no_content(item1.name)
+      end
+
+      it 'has links to merchant invoice show page next to each item' do
+        visit merchant_dashboard_path(merchant1)
+    
+        expect(page).to have_link(invoice4.id)
       end
     end
 
