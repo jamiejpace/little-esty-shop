@@ -7,4 +7,8 @@ class Merchant < ApplicationRecord
   scope :by_status, ->(status) {
     where(status: status)
   }
+
+  scope :get_highest_id, -> {
+    maximum(:id) || 1
+  }
 end
