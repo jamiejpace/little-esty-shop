@@ -1,0 +1,5 @@
+<%= form_with model: model, url: admin_merchant_path(model), method: method, local: true do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name, value: model&.name %>
+  <%= f.submit 'Submit', class: 'btn btn-outline-success'%>
+<% end %>

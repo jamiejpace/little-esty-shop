@@ -1,5 +1,19 @@
 <h1>Admin Merchants</h1>
 
-<% @merchants.each do |merch| %>
-  <%= link_to merch.name, admin_merchant_path(merch) %>
+<div id="enabled">
+<% @merchants.by_status('enabled').each do |merch| %>
+    <%= link_to merch.name, admin_merchant_path(merch) %>
+    <span id="merch-<%= merch.id %>">
+      <%= button_to "Disable #{merch.name}", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'disabled', name: merch.name } } %>
+    </span>
 <% end %>
+</div>
+
+<div id="disabled">
+<% @merchants.by_status('disabled').each do |merch| %>
+    <%= link_to merch.name, admin_merchant_path(merch) %>
+    <span id="merch-<%= merch.id %>">
+    <%= button_to "Enable #{merch.name}", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'enabled', name: merch.name } } %>
+    </span>
+<% end %>
+</div>
