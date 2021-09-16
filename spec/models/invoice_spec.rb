@@ -30,11 +30,12 @@ RSpec.describe Invoice, type: :model do
     let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice2.id } }
 
     it '#merchant_invoices' do
-      expect(Invoice.merchant_invoices(merchant)).to eq([invoice1, invoice2])
+      expect(Invoice.merchant_invoices(merchant)).to eq([invoice1, invoice1, invoice2])
     end
 
     it '#for_merchant' do
       expect(Invoice.for_merchant(merchant)).to eq([invoice1, invoice2])
+    end
 
     context 'for merchants' do
       let!(:merchant) { create :merchant }
@@ -61,8 +62,8 @@ RSpec.describe Invoice, type: :model do
     end
 
     it '#merchant_fav_customers' do
-      fav = "#{customer2.first_name} #{customer2.last_name}"
-      expect(Invoice.merchant_fav_customers(merchant)).to eq([fav])
+      fav = [["#{customer2.first_name} #{customer2.last_name}", 1]]
+      expect(Invoice.merchant_fav_customers(merchant)).to eq(fav)
     end
   end
 end
