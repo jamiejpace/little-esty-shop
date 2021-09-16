@@ -1,0 +1,5 @@
+<h1>Admin Merchants</h1>
+
+<% @merchants.each do |merch| %>
+  <%= link_to merch.name, admin_merchant_path(merch) %>
+<% end %>
