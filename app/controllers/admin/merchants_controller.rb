@@ -12,7 +12,7 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def create
-    @merchant = Merchant.new(merchant_params.merge({ id: next_id }))
+    @merchant = Merchant.new(merchant_params.merge({id: next_id}))
     if @merchant.save
       flash[:success] = "New merchant created"
       redirect_to admin_merchants_path
