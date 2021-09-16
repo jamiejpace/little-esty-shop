@@ -136,10 +136,13 @@ RSpec.describe 'Merchant Dashboard Show Page' do
 
       it 'has links to merchant invoice show page next to each item' do
         visit merchant_dashboard_path(merchant1)
-    
+
         expect(page).to have_link(invoice4.id)
+
+        click_link invoice4.id
+
+        expect(current_path).to eq("/merchants/#{merchant1.id}/invoices/#{invoice4.id}")
       end
     end
-
   end
 end
