@@ -1,5 +1,5 @@
-<%= form_with model: model, url: url, method: method, local: true do |f| %>
+<%= form_with model: [:admin, model], local: true do |f| %>
   <%= f.label :name %>
-  <%= f.text_field :name, value: model&.name %>
+  <%= f.text_field :name %>
   <%= f.submit 'Submit', class: 'btn btn-outline-success'%>
 <% end %>
