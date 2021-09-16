@@ -1,4 +1,14 @@
 <%= @merchant.name %>
 
 <%= link_to 'Items', merchant_items_path(@merchant) %>
-<%= link_to 'Invoices', merchant_invoices_path(@merchant) %>
+<%= link_to 'Invoices', merchant_invoices_path(@merchant) %><br>
+
+Top 5 customers:
+<% @fav_customers.each do |fav| %><br>
+    Customer Name: <%= fav[0] %><br>
+    Number of Successful Transactions: <%= fav[1] %><br>
+<% end %>
+Items Ready to Ship:
+<% %><br>
+    Item Name: <%=  %><br>
+    Invoice ID: <%=  %><br>
