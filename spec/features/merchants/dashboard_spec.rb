@@ -13,8 +13,8 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     let!(:item2) { create :item, { merchant_id: merchant1.id } }
     let!(:item3) { create :item, { merchant_id: merchant1.id } }
     let!(:invoice1) { create :invoice, { customer_id: customer.id} }
-    let!(:invoice2) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice3) { create :invoice, { customer_id: customer2.id} }
+    let!(:invoice2) { create :invoice, { customer_id: customer2.id, created_at: Date.today - 2} }
+    let!(:invoice3) { create :invoice, { customer_id: customer2.id, created_at: Date.today } }
     let!(:invoice4) { create :invoice, { customer_id: customer2.id} }
     let!(:invoice5) { create :invoice, { customer_id: customer2.id} }
     let!(:invoice6) { create :invoice, { customer_id: customer2.id} }
@@ -44,28 +44,28 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     let!(:transaction14) { create :transaction, { invoice_id: invoice14.id, result: 0 } }
     let!(:transaction15) { create :transaction, { invoice_id: invoice15.id, result: 0 } }
     let!(:transaction16) { create :transaction, { invoice_id: invoice16.id, result: 0 } }
-    let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
-    let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice2.id } }
-    let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice3.id } }
-    let!(:inv_item4) { create :invoice_item, { item_id: item3.id, invoice_id: invoice4.id } }
-    let!(:inv_item5) { create :invoice_item, { item_id: item3.id, invoice_id: invoice5.id } }
-    let!(:inv_item6) { create :invoice_item, { item_id: item3.id, invoice_id: invoice6.id } }
-    let!(:inv_item7) { create :invoice_item, { item_id: item3.id, invoice_id: invoice7.id } }
-    let!(:inv_item8) { create :invoice_item, { item_id: item3.id, invoice_id: invoice8.id } }
-    let!(:inv_item9) { create :invoice_item, { item_id: item3.id, invoice_id: invoice9.id } }
-    let!(:inv_item10) { create :invoice_item, { item_id: item3.id, invoice_id: invoice10.id } }
-    let!(:inv_item11) { create :invoice_item, { item_id: item3.id, invoice_id: invoice11.id } }
-    let!(:inv_item12) { create :invoice_item, { item_id: item3.id, invoice_id: invoice12.id } }
-    let!(:inv_item13) { create :invoice_item, { item_id: item3.id, invoice_id: invoice13.id } }
-    let!(:inv_item14) { create :invoice_item, { item_id: item3.id, invoice_id: invoice14.id } }
-    let!(:inv_item15) { create :invoice_item, { item_id: item3.id, invoice_id: invoice15.id } }
-    let!(:inv_item16) { create :invoice_item, { item_id: item3.id, invoice_id: invoice16.id } }
+    let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, status: 2 } }
+    let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice2.id, status: 0 } }
+    let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice3.id, status: 0 } }
+    let!(:inv_item4) { create :invoice_item, { item_id: item3.id, invoice_id: invoice4.id, status: 0 } }
+    let!(:inv_item5) { create :invoice_item, { item_id: item3.id, invoice_id: invoice5.id, status: 2 } }
+    let!(:inv_item6) { create :invoice_item, { item_id: item3.id, invoice_id: invoice6.id, status: 2 } }
+    let!(:inv_item7) { create :invoice_item, { item_id: item3.id, invoice_id: invoice7.id, status: 2 } }
+    let!(:inv_item8) { create :invoice_item, { item_id: item3.id, invoice_id: invoice8.id, status: 2 } }
+    let!(:inv_item9) { create :invoice_item, { item_id: item3.id, invoice_id: invoice9.id, status: 2 } }
+    let!(:inv_item10) { create :invoice_item, { item_id: item3.id, invoice_id: invoice10.id, status: 2 } }
+    let!(:inv_item11) { create :invoice_item, { item_id: item3.id, invoice_id: invoice11.id, status: 2 } }
+    let!(:inv_item12) { create :invoice_item, { item_id: item3.id, invoice_id: invoice12.id, status: 2 } }
+    let!(:inv_item13) { create :invoice_item, { item_id: item3.id, invoice_id: invoice13.id, status: 2 } }
+    let!(:inv_item14) { create :invoice_item, { item_id: item3.id, invoice_id: invoice14.id, status: 1 } }
+    let!(:inv_item15) { create :invoice_item, { item_id: item3.id, invoice_id: invoice15.id, status: 1 } }
+    let!(:inv_item16) { create :invoice_item, { item_id: item3.id, invoice_id: invoice16.id, status: 1 } }
 
     before :each do
       visit merchant_dashboard_path(merchant1.id)
     end
 
-    it 'shows merchant dashbaord attributes' do
+    it 'shows merchant dashboard attributes' do
 
       expect(page).to have_content(merchant1.name)
     end
@@ -85,6 +85,12 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     end
 
     describe 'statistics - favorite customers' do
+      it 'has text' do
+        expect(page).to have_content("Top 5 customers:")
+        expect(page).to have_content("Customer Name:")
+        expect(page).to have_content("Number of Successful Transactions:")
+      end
+
       it 'shows names of the top five customers with successful transactions' do
         fav2 = "#{customer2.first_name} #{customer2.last_name}"
         fav6 = "#{customer6.first_name} #{customer6.last_name}"
@@ -118,12 +124,43 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         expect(page).to have_content("Number of Successful Transactions: 1")
       end
     end
-    describe 'Items Ready to Ship' do
-      it 'lists names of ordered items not shipped' do
 
+    describe 'Items Ready to Ship' do
+      it 'has text' do
         expect(page).to have_content("Items Ready to Ship:")
         expect(page).to have_content("Item Name:")
-        # expect(page).to have_content("Invoice ID:")
+        expect(page).to have_content("Created at:")
+        expect(page).to have_content("Invoice ID:")
+      end
+
+      it 'lists names of ordered items not shipped' do
+        bestitem = double("fake_item")
+        
+        allow(bestitem).to receive(:name).and_return("Jasmine")
+        allow(bestitem).to receive(:invoices_created_at).and_return(Date.new 1994, 12, 27)
+        allow(bestitem).to receive(:invoices_id).and_return(21)
+        allow(Item).to receive(:merch_items_ship_ready).and_return([bestitem])
+
+        visit merchant_dashboard_path(merchant1)
+
+        expect(page).to have_content("Item Name: Jasmine")
+        expect(page).to have_content("Invoice ID: 21")
+      end
+
+      it 'has links to merchant invoice show page next to each item' do
+        expect(page).to have_link(invoice4.id)
+
+        click_link invoice4.id
+
+        expect(current_path).to eq("/merchants/#{merchant1.id}/invoices/#{invoice4.id}")
+      end
+
+      it 'date invoice was created formatted next to item name' do
+        expect(page).to have_content("Created at: #{invoice1.created_at.strftime('%A, %B %-d, %Y')}")
+      end
+
+      it 'orders items ready to ship by invoice created date oldest to newest' do
+        expect(item2.name).to appear_before(item3.name)
       end
     end
   end

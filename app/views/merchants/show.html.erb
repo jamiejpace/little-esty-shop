@@ -3,12 +3,15 @@
 <%= link_to 'Items', merchant_items_path(@merchant) %>
 <%= link_to 'Invoices', merchant_invoices_path(@merchant) %><br>
 
-Top 5 customers:
-<% @fav_customers.each do |fav| %><br>
-    Customer Name: <%= fav[0] %><br>
-    Number of Successful Transactions: <%= fav[1] %><br>
+<h5>Top 5 customers:</h5>
+<% @customers.each do |customer| %><br>
+    Customer Name: <%= customer[0] %><br>
+    Number of Successful Transactions: <%= customer[1] %><br>
 <% end %>
-Items Ready to Ship:
-<% %><br>
-    Item Name: <%=  %><br>
-    Invoice ID: <%=  %><br>
+
+<h5>Items Ready to Ship:</h5>
+<% @items.each do |item| %><br>
+    Item Name: <%= item.name %><br>
+    Created at: <%= item.invoices_created_at.strftime('%A, %B %-d, %Y') %><br>
+    Invoice ID: <%= link_to item.invoices_id , merchant_invoice_path(@merchant.id, item.invoices_id) %><br>
+<% end %>
