@@ -45,4 +45,20 @@ RSpec.describe 'Admin Invoice Show Page' do
       expect(page).to have_content(@invoice_item_3.status)
     end
   end
+
+  describe 'total revenue' do
+    let!(:customer) { create :customer }
+    let!(:merchant) { create :merchant }
+    let!(:invoice) { create :invoice, { customer_id: customer.id } }
+    let!(:item) { create :item, { merchant_id: merchant.id } }
+    let!(:invoice_item) { create :invoice_item, { invoice_id: invoice.id, item_id: item.id, unit_price: 13000 } }
+
+    it 'shows the total revenue' do
+      visit admin_invoice_path(invoice)
+
+      within '#invoice-attr' do
+        expect(page).to have_content('$130.00')
+      end
+    end
+  end
 end
