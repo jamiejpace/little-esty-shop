@@ -1,0 +1,7 @@
+<% session[:user_names].each do |name| %>
+  <% unless name.last %>
+    <%= "#{name}," %>
+  <% else %>
+    <%= " and #{name}" %>
+  <% end %>
+<% end %>
