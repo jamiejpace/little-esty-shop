@@ -1,6 +1,10 @@
 <h1>Admin Merchants</h1>
 
-<div id="enabled">
+<%= link_to "Create New Merchant", new_admin_merchant_path %>
+
+<div class="container">
+<div class="row">
+<div id="enabled" class="col">
 <% @merchants.by_status('enabled').each do |merch| %>
     <%= link_to merch.name, admin_merchant_path(merch) %>
     <span id="merch-<%= merch.id %>">
@@ -9,11 +13,13 @@
 <% end %>
 </div>
 
-<div id="disabled">
+<div id="disabled" class="col">
 <% @merchants.by_status('disabled').each do |merch| %>
     <%= link_to merch.name, admin_merchant_path(merch) %>
     <span id="merch-<%= merch.id %>">
     <%= button_to "Enable #{merch.name}", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'enabled', name: merch.name } } %>
     </span>
 <% end %>
+</div>
+</div>
 </div>
