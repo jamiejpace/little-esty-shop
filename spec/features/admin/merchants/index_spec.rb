@@ -63,5 +63,30 @@ RSpec.describe 'Admin Merchant Index' do
       click_on "Create New Merchant"
       expect(current_path).to eq(new_admin_merchant_path)
     end
+
+    it 'has top_five merchants by revenue' do
+      merch1 = double('merchant')
+      merch2 = double('merchant')
+      merch3 = double('merchant')
+      merch4 = double('merchant')
+      merch5 = double('merchant')
+      allow(merch1).to receive(:name).and_return('Chuck')
+      allow(merch2).to receive(:name).and_return('Jamie')
+      allow(merch3).to receive(:name).and_return('Christina')
+      allow(merch4).to receive(:name).and_return('Carmen')
+      allow(merch5).to receive(:name).and_return('Sandiago')
+
+      allow(Merchant).to receive(:top_five_merchants).and_return([merch1, merch2, merch3, merch4, merch5])
+
+      visit admin_merchants_path
+
+      within '#top-merchants' do
+        expect(page).to have_content(merch1.name)
+        expect(page).to have_content(merch2.name)
+        expect(page).to have_content(merch3.name)
+        expect(page).to have_content(merch4.name)
+        expect(page).to have_content(merch5.name)
+      end
+    end
   end
 end

@@ -21,5 +21,10 @@
     </span>
 <% end %>
 </div>
+<div id="top-merchants" class="col">
+<% @merchants.top_five_merchants.each do |merch| %>
+    <%= merch.name %>
+<% end %>
+</div>
 </div>
 </div>
