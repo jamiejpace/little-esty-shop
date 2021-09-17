@@ -3,7 +3,7 @@
 <div id="invoice-attr">
   <%= form_with model: [:admin, @invoice], local: true do |f| %>
     <%= f.label "Status:" %>
-    <%= f.collection_select :status, Invoice.statuses, :last, :first, value: @invoice.status  %>
+    <%= f.collection_select :status, Invoice.statuses, :first, :first, value: @invoice.status  %>
     <%= f.submit 'Update Status' %>
   <% end %>
   <p>Created at: <%= @invoice.created_at.strftime("%A, %B %e, %Y") %></p>
