@@ -13,7 +13,7 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
-    <title>Little Esty Shop</title>
+    <title>Besty Esty Shop</title>
   </head>
   <body>
     <%= render 'shared/navbar' %>
@@ -21,6 +21,8 @@
       <%= render 'shared/flash' %>
       <%= yield %>
     </div>
+    <%= render 'shared/footer' %>
+
     <!-- Option 1: Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
   </body>
