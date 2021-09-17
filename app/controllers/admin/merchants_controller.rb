@@ -1,10 +1,12 @@
 class Admin::MerchantsController < ApplicationController
+
+  before_action :find_merchant, except: [:new, :create, :index]
+
   def index
     @merchants = Merchant.all
   end
 
   def show
-    @merchant = Merchant.find(params[:id])
   end
 
   def new
@@ -23,11 +25,9 @@ class Admin::MerchantsController < ApplicationController
   end
 
   def edit
-    @merchant = Merchant.find(params[:id])
   end
 
   def update
-    @merchant = Merchant.find(params[:id])
     if @merchant.update(merchant_params)
       flash[:success] = "Successfully updated merchant"
       updates_redirect_location
@@ -52,5 +52,9 @@ class Admin::MerchantsController < ApplicationController
 
   def next_id
     Merchant.get_highest_id + 1
+  end
+
+  def find_merchant
+    @merchant = Merchant.find(params[:id])
   end
 end
