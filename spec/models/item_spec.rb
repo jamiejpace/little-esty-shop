@@ -5,6 +5,11 @@ RSpec.describe Item, type: :model do
     it { should belong_to(:merchant) }
     it { should have_many(:invoice_items) }
     it { should have_many(:invoices).through(:invoice_items) }
+
+    it 'validates default disabled status' do
+      item = create(:item)
+      expect(item.status).to eq("disabled")
+    end
   end
 
   describe 'class method/scope' do
