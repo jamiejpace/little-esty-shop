@@ -12,11 +12,8 @@
 </div>
 
 <div id="items-attr">
-  <% @invoice.items.each do |i| %>
-    <p><%= i.name %></p>
-  <% end %>
-
   <% @invoice.invoice_items.each do |i| %>
+    <p><%= i.item.name %></p>
     <p><%= i.quantity %></p>
     <p><%= i.unit_price %></p>
     <p><%= i.status %></p>
