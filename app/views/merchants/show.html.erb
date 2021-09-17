@@ -12,5 +12,6 @@
 <h5>Items Ready to Ship:</h5>
 <% @items.each do |item| %><br>
     Item Name: <%= item.name %><br>
+    Created at: <%= item.invoices_created_at.strftime('%A, %B %-d, %Y') %><br>
     Invoice ID: <%= link_to item.invoices_id , merchant_invoice_path(@merchant.id, item.invoices_id) %><br>
 <% end %>
