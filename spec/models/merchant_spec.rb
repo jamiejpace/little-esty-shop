@@ -29,7 +29,7 @@ RSpec.describe Merchant, type: :model do
         expect(Merchant.by_status('enabled')).to eq([@merch1, @merch3])
       end
     end
-  end 
+  end
 
   describe 'top 5 merchants by revenue' do
     let!(:merch1) { create :merchant }
