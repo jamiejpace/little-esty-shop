@@ -3,5 +3,9 @@ class Transaction < ApplicationRecord
 
   belongs_to :invoice
 
-  enum status: %w(success failed)
+  enum result: %w(success failed)
+
+  scope :successful, -> {
+    where(result: 0)
+  }
 end
