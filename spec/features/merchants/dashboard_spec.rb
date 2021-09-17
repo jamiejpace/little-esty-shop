@@ -13,8 +13,8 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     let!(:item2) { create :item, { merchant_id: merchant1.id } }
     let!(:item3) { create :item, { merchant_id: merchant1.id } }
     let!(:invoice1) { create :invoice, { customer_id: customer.id} }
-    let!(:invoice2) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice3) { create :invoice, { customer_id: customer2.id} }
+    let!(:invoice2) { create :invoice, { customer_id: customer2.id, created_at: Date.today - 2} }
+    let!(:invoice3) { create :invoice, { customer_id: customer2.id, created_at: Date.today } }
     let!(:invoice4) { create :invoice, { customer_id: customer2.id} }
     let!(:invoice5) { create :invoice, { customer_id: customer2.id} }
     let!(:invoice6) { create :invoice, { customer_id: customer2.id} }
@@ -85,6 +85,12 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     end
 
     describe 'statistics - favorite customers' do
+      it 'has text' do
+        expect(page).to have_content("Top 5 customers:")
+        expect(page).to have_content("Customer Name:")
+        expect(page).to have_content("Number of Successful Transactions:")
+      end
+
       it 'shows names of the top five customers with successful transactions' do
         fav2 = "#{customer2.first_name} #{customer2.last_name}"
         fav6 = "#{customer6.first_name} #{customer6.last_name}"
@@ -120,23 +126,28 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     end
 
     describe 'Items Ready to Ship' do
+      it 'has text' do
+        expect(page).to have_content("Items Ready to Ship:")
+        expect(page).to have_content("Item Name:")
+        expect(page).to have_content("Created at:")
+        expect(page).to have_content("Invoice ID:")
+      end
+
       it 'lists names of ordered items not shipped' do
-        # merchant1 = Merchant.create!(name: "The Merchant", id: 1)
-        # item21 = Item.create!(name: "Jamie")
-        # invoice = Invoice.create!(id: 21)
-        #
-        # allow(Item).to receive(:merch_items_ship_ready).and_return(item21)
+        bestitem = double("fake_item")
+        
+        allow(bestitem).to receive(:name).and_return("Jasmine")
+        allow(bestitem).to receive(:invoices_created_at).and_return(Date.new 1994, 12, 27)
+        allow(bestitem).to receive(:invoices_id).and_return(21)
+        allow(Item).to receive(:merch_items_ship_ready).and_return([bestitem])
+
         visit merchant_dashboard_path(merchant1)
 
-        expect(page).to have_content("Items Ready to Ship:")
-        expect(page).to have_content("Item Name: #{item1.name}")
-        expect(page).to have_content("Invoice ID: #{invoice1.id}")
-        # expect(page).to have_no_content(item1.name)
+        expect(page).to have_content("Item Name: Jasmine")
+        expect(page).to have_content("Invoice ID: 21")
       end
 
       it 'has links to merchant invoice show page next to each item' do
-        visit merchant_dashboard_path(merchant1)
-
         expect(page).to have_link(invoice4.id)
 
         click_link invoice4.id
@@ -144,14 +155,12 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         expect(current_path).to eq("/merchants/#{merchant1.id}/invoices/#{invoice4.id}")
       end
 
-      it 'has the date the invoice was created next to the name of the item' do
-        return_value = [
-          ["Jamie", 21, "pending"]
-        ]
+      it 'date invoice was created formatted next to item name' do
+        expect(page).to have_content("Created at: #{invoice1.created_at.strftime('%A, %B %-d, %Y')}")
+      end
 
-        allow(Item).to receive(:merch_items_ship_ready).and_return(return_value)
-
-        visit merchant_dashboard_path(merchant1)
+      it 'orders items ready to ship by invoice created date oldest to newest' do
+        expect(item2.name).to appear_before(item3.name)
       end
     end
   end
