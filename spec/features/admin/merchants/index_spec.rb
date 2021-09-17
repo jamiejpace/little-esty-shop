@@ -75,17 +75,28 @@ RSpec.describe 'Admin Merchant Index' do
       allow(merch3).to receive(:name).and_return('Christina')
       allow(merch4).to receive(:name).and_return('Carmen')
       allow(merch5).to receive(:name).and_return('Sandiago')
+      allow(merch1).to receive(:total).and_return(100)
+      allow(merch2).to receive(:total).and_return(200)
+      allow(merch3).to receive(:total).and_return(300)
+      allow(merch4).to receive(:total).and_return(400)
+      allow(merch5).to receive(:total).and_return(500)
+      allow(merch1).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch2).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch3).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch4).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch5).to receive(:date).and_return(DateTime.new(2021, 1, 1))
 
-      allow(Merchant).to receive(:top_five_merchants).and_return([merch1, merch2, merch3, merch4, merch5])
+      allow(Merchant).to receive(:top_five_merchants).and_return([merch5, merch4, merch3, merch2, merch1])
 
       visit admin_merchants_path
 
       within '#top-merchants' do
-        expect(page).to have_content(merch1.name)
-        expect(page).to have_content(merch2.name)
-        expect(page).to have_content(merch3.name)
-        expect(page).to have_content(merch4.name)
-        expect(page).to have_content(merch5.name)
+        [merch5, merch4, merch3, merch2, merch1].each do |merch|
+          within "#merch-#{merch.name}"
+          expect(page).to have_content(merch.name)
+          expect(page).to have_content("$#{merch.total / 100}.00")
+          expect(page).to have_content(merch.date.strftime('%b%e, %Y'))
+        end
       end
     end
   end
