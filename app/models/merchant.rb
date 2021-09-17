@@ -3,6 +3,9 @@ class Merchant < ApplicationRecord
   validates_presence_of :name
 
   has_many :items, dependent: :destroy
+  has_many :invoice_items, through: :items
+  has_many :invoices, through: :invoice_items
+  has_many :transactions, through: :invoices
 
   scope :by_status, ->(status) {
     where(status: status)
@@ -12,8 +15,10 @@ class Merchant < ApplicationRecord
     maximum(:id) || 1
   }
 
-  scope :top_five_merchants, -> {
-    select("SUM(invoice_items.quantity * invoice_items.unit_price) AS total").distinct.joins(items: { invoices: :transactions } )
-    .where("transactions.result = ?", 0).group(:id).order(total: :desc).limit(5).pluck(:name, "SUM(invoice_items.quantity * invoice_items.unit_price)")
-  }
+  def self.top_five_merchants
+    joins(items: { invoices: :transactions } ).group(:id)
+    .select(:name, "SUM(invoice_items.unit_price * invoice_items.quantity) AS total")
+    .where("transactions.result = ?", 0)
+    .order(total: :desc).limit(5)
+  end
 end
