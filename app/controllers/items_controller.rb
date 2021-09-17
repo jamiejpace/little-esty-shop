@@ -10,6 +10,15 @@ class ItemsController < ApplicationController
   def show
   end
 
+  def new
+    @item = Item.new
+  end
+
+  def create
+    item = @merchant.items.create!(item_params.merge({ id: Item.maximum(:id).next }))
+    redirect_to merchant_items_path(@merchant)
+  end
+
   def edit
   end
 
