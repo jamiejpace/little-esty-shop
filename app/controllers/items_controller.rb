@@ -1,10 +1,38 @@
 class ItemsController < ApplicationController
+
+  before_action :current_merchant
+  before_action :current_item, except: [:index, :new, :create]
+
   def index
-    @merchant = Merchant.find(params[:merchant_id])
     @items = @merchant.items
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @item.update(item_params)
+      flash[:success] = "Successfully Updated Item"
+      redirect_to merchant_item_path(@merchant, @item)
+    else
+      flash[:alert] = "Do Better"
+      render :edit
+    end
+  end
+
+  private
+  def current_item
     @item = Item.find(params[:id])
+  end
+
+  def current_merchant
+    @merchant = Merchant.find(params[:merchant_id])
+  end
+
+  def item_params
+    params.require(:item).permit(:name, :description, :unit_price)
   end
 end
