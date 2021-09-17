@@ -2,18 +2,15 @@ require 'rails_helper'
 # rspec spec/models/invoice_spec.rb
 RSpec.describe Invoice, type: :model do
   describe 'relationships' do
-    let(:invoice) { create :invoice }
-    let(:status) { ['in progress', 'completed', 'cancelled'] }
-
     it { should belong_to(:customer) }
     it { should have_many(:invoice_items) }
-
     it { should have_many(:items).through(:invoice_items) }
     it { should have_many(:transactions) }
   end
 
   describe 'class methods/scopes' do
-
+    let(:invoice) { create :invoice }
+    let(:status) { ['in progress', 'completed', 'cancelled'] }
     let!(:merchant) { create :merchant }
     let!(:customer) { create :customer }
     let!(:customer2) { create :customer }
@@ -58,7 +55,6 @@ RSpec.describe Invoice, type: :model do
       it '#pending_invoices' do
         expect(Invoice.pending_invoices).to eq([invoice1, invoice2])
       end
-
     end
 
     it '#merchant_fav_customers' do
