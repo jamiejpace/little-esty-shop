@@ -46,5 +46,13 @@ RSpec.describe 'Merchant Items Index Page' do
         expect(page).to have_button("Enable #{@item2.name}")
       end
     end
+
+    it 'has a link to create new item' do
+      expect(page).to have_link('Create Item')
+
+      click_link 'Create Item'
+
+      expect(current_path).to eq(new_merchant_item_path(@merchant))
+    end
   end
 end
