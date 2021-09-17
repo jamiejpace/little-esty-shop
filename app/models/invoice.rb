@@ -23,4 +23,8 @@ class Invoice < ApplicationRecord
   scope :pending_invoices, -> {
     where(status: 0).order(:created_at)
   }
+
+  def total_revenue
+    invoice_items.sum("invoice_items.unit_price * invoice_items.quantity")
+  end
 end

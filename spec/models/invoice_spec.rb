@@ -62,4 +62,22 @@ RSpec.describe Invoice, type: :model do
       expect(Invoice.merchant_fav_customers(merchant)).to eq(fav)
     end
   end
+
+  describe 'instance methods' do
+    describe 'total revenue' do
+      let!(:customer) { create :customer }
+      let!(:merchant) { create :merchant }
+      let!(:invoice) { create :invoice, { customer_id: customer.id } }
+      let!(:item1) { create :item, { merchant_id: merchant.id } }
+      let!(:item2) { create :item, { merchant_id: merchant.id } }
+      let!(:item3) { create :item, { merchant_id: merchant.id } }
+      let!(:inv_item1) { create :invoice_item, { invoice_id: invoice.id, item_id: item1.id, unit_price: 100, quantity: 1 } }
+      let!(:inv_item2) { create :invoice_item, { invoice_id: invoice.id, item_id: item2.id, unit_price: 150, quantity: 2 } }
+      let!(:inv_item3) { create :invoice_item, { invoice_id: invoice.id, item_id: item3.id, unit_price: 300, quantity: 1 } }
+
+      it '#total_revenue' do
+        expect(invoice.total_revenue).to eq(700)
+      end
+    end
+  end
 end
