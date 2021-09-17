@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
   resources :merchants, only: :index do
     get '/dashboard', controller: :merchants, action: :show, as: 'dashboard'
-    resources :items, only: :index
+    resources :items, only: [:index, :show]
     resources :invoices, only: [:index, :show]
   end
 
