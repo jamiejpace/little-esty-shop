@@ -43,7 +43,6 @@ RSpec.describe 'Admin Invoice Show Page' do
       expect(page).to have_content(@invoice_item_1.status)
       expect(page).to have_content(@invoice_item_2.status)
       expect(page).to have_content(@invoice_item_3.status)
-save_and_open_page
     end
   end
 end
