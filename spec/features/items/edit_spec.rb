@@ -15,7 +15,7 @@ RSpec.describe 'Merchant Items Edit Page' do
 
         fill_in "Name", with: "Best Item Ever"
 
-        click_button 'Update'
+        click_button 'Submit'
       end
 
       expect(current_path).to eq(merchant_item_path(@merchant, @item))
