@@ -46,7 +46,7 @@ RSpec.describe 'Admin Invoice Show Page' do
     end
   end
 
-  describe 'total revenue' do
+  describe 'total revenue / updating status' do
     let!(:customer) { create :customer }
     let!(:merchant) { create :merchant }
     let!(:invoice) { create :invoice, { customer_id: customer.id } }
@@ -59,6 +59,15 @@ RSpec.describe 'Admin Invoice Show Page' do
       within '#invoice-attr' do
         expect(page).to have_content('$130.00')
       end
+    end
+
+    it 'has button to update the status' do
+      select "cancelled", from: "invoice_status"
+      click_button 'Update Status'
+
+      expect(find_field('invoice_status').value).to eq('cancelled')
+
+      expect(current_path).to eq(admin_invoice_path(@invoice))
     end
   end
 end
