@@ -34,5 +34,17 @@ RSpec.describe 'Merchant Items Index Page' do
       expect(current_path).to eq(merchant_items_path(@merchant))
       expect(page).to have_no_button("Disable #{@item2.name}")
     end
+
+    it 'has a disable and enable section' do
+      within '#enabled' do
+        expect(page).to have_no_button("Enable #{@item1.name}")
+        expect(page).to have_button("Disable #{@item1.name}")
+      end
+
+      within '#disabled' do
+        expect(page).to have_no_button("Disable #{@item2.name}")
+        expect(page).to have_button("Enable #{@item2.name}")
+      end
+    end
   end
 end
