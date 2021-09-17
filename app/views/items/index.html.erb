@@ -3,3 +3,25 @@
 <% @items.each do |item| %>
   <%= link_to item.name, merchant_item_path(@merchant, item) %><br>
 <% end %>
+
+<div class="container">
+<div id="enabled">
+<h5>Enabled</h5>
+<% @items.by_status('enabled').each do |item| %>
+    <%= link_to item.name, merchant_item_path(@merchant, item) %>
+    <span id="item-<%= item.id %>">
+      <%= button_to "Disable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'disabled', name: item.name } } %>
+    </span>
+<% end %>
+</div>
+
+<div id="disabled">
+<h5>Disabled</h5>
+<% @items.by_status('disabled').each do |item| %>
+    <%= link_to item.name, merchant_item_path(@merchant, item) %>
+    <span id="item-<%= item.id %>">
+    <%= button_to "Enable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'enabled', name: item.name } } %>
+    </span>
+<% end %>
+</div>
+</div>
