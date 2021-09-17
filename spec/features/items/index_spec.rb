@@ -1,5 +1,5 @@
 require 'rails_helper'
-# rspec spec/features/merchants/index_spec.rb
+# rspec spec/features/items/index_spec.rb
 RSpec.describe 'Merchant Items Index Page' do
   describe 'Merchant Items Index Page' do
     before :each do
