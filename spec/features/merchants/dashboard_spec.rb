@@ -121,17 +121,17 @@ RSpec.describe 'Merchant Dashboard Show Page' do
 
     describe 'Items Ready to Ship' do
       it 'lists names of ordered items not shipped' do
-        return_value = [
-          ["Jamie", 21, "pending"]
-        ]
-
-        allow(InvoiceItem).to receive(:merch_items_ship_ready).and_return(return_value)
+        # merchant1 = Merchant.create!(name: "The Merchant", id: 1)
+        # item21 = Item.create!(name: "Jamie")
+        # invoice = Invoice.create!(id: 21)
+        #
+        # allow(Item).to receive(:merch_items_ship_ready).and_return(item21)
         visit merchant_dashboard_path(merchant1)
 
         expect(page).to have_content("Items Ready to Ship:")
-        expect(page).to have_content("Item Name: Jamie")
-        expect(page).to have_content("Invoice ID: 21")
-        expect(page).to have_no_content(item1.name)
+        expect(page).to have_content("Item Name: #{item1.name}")
+        expect(page).to have_content("Invoice ID: #{invoice1.id}")
+        # expect(page).to have_no_content(item1.name)
       end
 
       it 'has links to merchant invoice show page next to each item' do
@@ -142,6 +142,16 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         click_link invoice4.id
 
         expect(current_path).to eq("/merchants/#{merchant1.id}/invoices/#{invoice4.id}")
+      end
+
+      it 'has the date the invoice was created next to the name of the item' do
+        return_value = [
+          ["Jamie", 21, "pending"]
+        ]
+
+        allow(Item).to receive(:merch_items_ship_ready).and_return(return_value)
+
+        visit merchant_dashboard_path(merchant1)
       end
     end
   end
