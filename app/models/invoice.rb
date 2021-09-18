@@ -13,11 +13,19 @@ class Invoice < ApplicationRecord
   }
 
   scope :for_merchant, ->(merchant) {
-    merchant_invoices(merchant).order(:created_at).distinct
+    # merchant_invoices(merchant).order(:created_at).distinct
+    merchant.ordered_invoices
   }
 
   scope :merchant_fav_customers, ->(merchant) {
-    merchant_invoices(merchant).joins(:customer, :transactions).where("transactions.result = 0").group("customers.id").order("count(transactions.id) desc").limit(5).pluck("customers.first_name ||' '|| customers.last_name", "count(transactions.id)")
+    # merchant_invoices(merchant).joins(:customer, :transactions)
+    # .where("transactions.result = 0")
+    # .group("customers.id").order("count(transactions.id) desc")
+    # .limit(5).pluck("customers.first_name ||' '|| customers.last_name", "count(transactions.id)")
+
+    merchant.fav_customers.map do |fav|
+      [fav.customer_name, fav.transaction_count]
+    end
   }
 
   scope :pending_invoices, -> {
@@ -25,6 +33,7 @@ class Invoice < ApplicationRecord
   }
 
   def total_revenue
-    invoice_items.sum("invoice_items.unit_price * invoice_items.quantity")
+    # invoice_items.sum("invoice_items.unit_price * invoice_items.quantity")
+    invoice_items.revenue
   end
 end

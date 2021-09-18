@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
-
-  before_action :set_github_info, only: :index
+  # before_action :set_github_info, only: :index
 
   def set_github_info
     conn = Faraday.new('https://api.github.com')
