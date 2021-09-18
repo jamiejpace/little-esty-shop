@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Transaction, type: :model do
   describe 'relationships' do
     let(:results) { ['success', 'failed'] }
+    let!(:transaction) { create :transaction, { result: 0 } }
 
     it { should belong_to :invoice}
 
@@ -10,6 +11,10 @@ RSpec.describe Transaction, type: :model do
       results.each_with_index do |item, index|
         expect(Transaction.results[item]).to eq(index)
       end
+    end
+
+    it 'successful scope returns successful results' do
+      expect(Transaction.successful).to eq([transaction])
     end
   end
 end
