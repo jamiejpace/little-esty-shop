@@ -7,7 +7,7 @@
 
 <div id='statistics'>
   <% @top_customers.each do |cust| %>
-    <%=  "#{cust[0]} #{cust[1]}: #{cust[2]}" %>
+    <%=  "#{cust.customer_name}: #{cust.transaction_count}" %>
   <% end %>
 </div>
 
