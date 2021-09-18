@@ -1,8 +1,6 @@
 require 'rails_helper'
 # rspec spec/models/invoice_item_spec.rb
 RSpec.describe InvoiceItem, type: :model do
-  # pending "add some examples to (or delete) #{__FILE__}"
-  # let(:invoice_item){ create :invoice_item}
 
   describe 'validations' do
     it { belong_to :item }
