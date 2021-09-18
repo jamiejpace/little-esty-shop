@@ -11,14 +11,32 @@ class Merchant < ApplicationRecord
     where(status: status)
   }
 
-  scope :get_highest_id, -> {
+  def self.get_highest_id
     maximum(:id) || 1
-  }
+  end
 
   def self.top_five_merchants
     joins(:transactions).group(:id)
     .select(:name, "SUM(invoice_items.unit_price * invoice_items.quantity) AS total, MAX(invoices.created_at) AS date")
     .where("transactions.result = ?", 0)
     .order(total: :desc).limit(5)
+  end
+
+  def items_ready_to_ship
+    invoices.merge(InvoiceItem.not_shipped)
+    invoices.joins(:invoice_items).where.not('invoice_items.status = 2')
+    .select("items.name, invoices.id AS invoices_id, invoices.created_at AS invoices_created_at")
+    .order(:invoices_created_at)
+  end
+
+  def ordered_invoices
+    invoices.order(:created_at).distinct
+  end
+
+  def fav_customers
+    transactions.successful.joins(invoice: :customer).group('customers.id')
+    .merge(Customer.full_names)
+    .select("COUNT(transactions.id) AS transaction_count")
+    .order(transaction_count: :desc).limit(5)
   end
 end
