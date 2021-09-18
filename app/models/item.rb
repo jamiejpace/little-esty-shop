@@ -13,4 +13,8 @@ class Item < ApplicationRecord
     # .order("invoices.created_at")
     merchant.items_ready_to_ship
   }
+
+  scope :by_status, ->(status) {
+    where(status: status)
+  }
 end
