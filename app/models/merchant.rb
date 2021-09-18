@@ -22,6 +22,7 @@ class Merchant < ApplicationRecord
     .order(total: :desc).limit(5)
   end
 
+<<<<<<< HEAD
   def items_ready_to_ship
     invoices.merge(InvoiceItem.not_shipped)
     invoices.joins(:invoice_items).where.not('invoice_items.status = 2')
@@ -38,5 +39,9 @@ class Merchant < ApplicationRecord
     .merge(Customer.full_names)
     .select("COUNT(transactions.id) AS transaction_count")
     .order(transaction_count: :desc).limit(5)
+=======
+  def top_five_items
+    items.joins(invoice_items: {invoice: :transactions}).select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue, MAX(invoices.created_at) AS date").where("transactions.result = ?", 0).group(:id).order(revenue: :desc).limit(5)
+>>>>>>> e797a0cfae3e264a7be68deaebaa98d69b6bad10
   end
 end
