@@ -1,5 +1,4 @@
 class Admin::MerchantsController < ApplicationController
-
   before_action :find_merchant, except: [:new, :create, :index]
 
   def index
@@ -38,6 +37,7 @@ class Admin::MerchantsController < ApplicationController
   end
 
   private
+
   def merchant_params
     params.require(:merchant).permit(:name, :status)
   end
