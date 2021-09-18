@@ -3,6 +3,7 @@
 <p>Invoice Status: <%= @invoice.status %></p>
 <p>Created at: <%= @invoice.created_at.strftime("%A, %B %e, %Y") %></p>
 <p>Customer Name: <%= @invoice.customer.full_name %></p>
+<p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
 <p><strong>Item Details</strong></p>
 <% @invoice_items.each do |inv_item|  %>
   <p><u>Item Name: <%= inv_item.item.name %></u><br>

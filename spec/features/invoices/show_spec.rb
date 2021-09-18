@@ -27,16 +27,19 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(page).to have_content(@invoice1.status)
       expect(page).to have_content('Saturday, September 18, 2021')
       expect(page).to have_content(@invoice1.customer.full_name)
+      expect(page).to have_content(@invoice1.total_revenue)
+      expect(page).to have_content("$150.00")
+
     end
 
-  context "Merchant Invoice Show Page - Invoice Item Information" do
-    it "lists all invoice items' names, quantity, price, and status" do
-      expect(page).to have_content(@invoice_item1.item.name)
-      expect(page).to have_content(@invoice_item1.quantity)
-      expect(page).to have_content(@invoice_item1.unit_price)
-      expect(page).to have_content(@invoice_item1.status)
-      expect(page).to have_no_content(@invoice_item3.item.name)
+    context "Merchant Invoice Show Page - Invoice Item Information" do
+      it "lists all invoice items' names, quantity, price, status" do
+        expect(page).to have_content(@invoice_item1.item.name)
+        expect(page).to have_content(@invoice_item1.quantity)
+        expect(page).to have_content(@invoice_item1.unit_price)
+        expect(page).to have_content(@invoice_item1.status)
+        expect(page).to have_no_content(@invoice_item3.item.name)
+      end
     end
-  end
   end
 end
