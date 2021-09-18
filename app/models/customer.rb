@@ -8,4 +8,8 @@ class Customer < ApplicationRecord
     .group(:id).order(count: :desc).limit(5)
     .pluck(:first_name, :last_name, Arel.sql("COUNT(transactions.id)"))
   }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
