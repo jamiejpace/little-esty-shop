@@ -63,5 +63,41 @@ RSpec.describe 'Admin Merchant Index' do
       click_on "Create New Merchant"
       expect(current_path).to eq(new_admin_merchant_path)
     end
+
+    it 'has top_five merchants by revenue' do
+      merch1 = double('merchant')
+      merch2 = double('merchant')
+      merch3 = double('merchant')
+      merch4 = double('merchant')
+      merch5 = double('merchant')
+      allow(merch1).to receive(:name).and_return('Chuck')
+      allow(merch2).to receive(:name).and_return('Jamie')
+      allow(merch3).to receive(:name).and_return('Christina')
+      allow(merch4).to receive(:name).and_return('Carmen')
+      allow(merch5).to receive(:name).and_return('Sandiago')
+      allow(merch1).to receive(:total).and_return(100)
+      allow(merch2).to receive(:total).and_return(200)
+      allow(merch3).to receive(:total).and_return(300)
+      allow(merch4).to receive(:total).and_return(400)
+      allow(merch5).to receive(:total).and_return(500)
+      allow(merch1).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch2).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch3).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch4).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+      allow(merch5).to receive(:date).and_return(DateTime.new(2021, 1, 1))
+
+      allow(Merchant).to receive(:top_five_merchants).and_return([merch5, merch4, merch3, merch2, merch1])
+
+      visit admin_merchants_path
+
+      within '#top-merchants' do
+        [merch5, merch4, merch3, merch2, merch1].each do |merch|
+          within "#merch-#{merch.name}"
+          expect(page).to have_content(merch.name)
+          expect(page).to have_content("$#{merch.total / 100}.00")
+          expect(page).to have_content(merch.date.strftime('%b%e, %Y'))
+        end
+      end
+    end
   end
 end
