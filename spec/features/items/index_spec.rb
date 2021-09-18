@@ -93,14 +93,15 @@ RSpec.describe 'Merchant Items Index Page' do
     let!(:inv_item9) { create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 700, quantity: 1 } }
     let!(:inv_item10) { create :invoice_item, { invoice_id: invoice1.id, item_id: item10.id, unit_price: 600, quantity: 1 } }
 
-    it 'has the top 5 items name and revenue' do
+    it 'has the top 5 items name, revenue, and best day' do
       visit merchant_items_path(@merchant)
 
       expect(page).to have_content('Top 5 Most Popular Items')
 
       within "#most_popular" do
         expect(page).to have_content(item6.name)
-        expect(page).to have_content(1000)
+        expect(page).to have_content("$10.00")
+        expect(page).to have_content(Date.today.strftime("%A, %B %e, %Y"))
         expect(item6.name).to appear_before(item7.name)
       end
     end
