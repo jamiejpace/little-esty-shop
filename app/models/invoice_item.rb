@@ -4,6 +4,8 @@ class InvoiceItem < ApplicationRecord
   belongs_to :item
   belongs_to :invoice
 
+  validates_presence_of :status
+
   enum status: %w(pending packaged shipped)
 
   scope :not_shipped, -> {
