@@ -20,4 +20,8 @@ class Customer < ApplicationRecord
   scope :full_names, -> {
     select("customers.first_name || ' ' || customers.last_name AS customer_name")
   }
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
 end
