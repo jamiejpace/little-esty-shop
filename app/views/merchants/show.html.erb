@@ -5,8 +5,8 @@
 
 <h5>Top 5 customers:</h5>
 <% @customers.each do |customer| %><br>
-    Customer Name: <%= customer[0] %><br>
-    Number of Successful Transactions: <%= customer[1] %><br>
+    Customer Name: <%= customer.customer_name %><br>
+    Number of Successful Transactions: <%= customer.transaction_count %><br>
 <% end %>
 
 <h5>Items Ready to Ship:</h5>
