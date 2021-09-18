@@ -39,13 +39,19 @@ RSpec.describe Customer, type: :model do
 
       it '#top_5_customers' do
         expected = [
-          [cust1.first_name, cust1.last_name, 5],
-          [cust4.first_name, cust4.last_name, 4],
-          [cust3.first_name, cust3.last_name, 3],
-          [cust2.first_name, cust2.last_name, 2],
-          [cust5.first_name, cust5.last_name, 1]
+          ["#{cust1.first_name} #{cust1.last_name}", 5],
+          ["#{cust4.first_name} #{cust4.last_name}", 4],
+          ["#{cust3.first_name} #{cust3.last_name}", 3],
+          ["#{cust2.first_name} #{cust2.last_name}", 2],
+          ["#{cust5.first_name} #{cust5.last_name}", 1]
         ]
-        expect(Customer.top_5_customers).to eq(expected)
+        result = Customer.top_5_customers
+        
+        expected.each_with_index do |exp, i|
+          expect(result[i].customer_name).to eq(exp.first)
+          expect(result[i].transaction_count).to eq(exp.last)
+        end
+
       end
     end
   end
