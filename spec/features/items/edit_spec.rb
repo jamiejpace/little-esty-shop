@@ -22,5 +22,23 @@ RSpec.describe 'Merchant Items Edit Page' do
       expect(page).to have_content("Best Item Ever")
       expect(page).to have_content("Successfully Updated Item")
     end
+
+    it 'handles incorrect form submission' do
+      within '#form' do
+
+        expect(find_field('item_name').value).to eq(@item.name)
+
+        fill_in "Name", with: ""
+
+        click_button 'Submit'
+
+      end
+      
+      within '#form' do
+          expect(find_field('item_name').value).to eq(@item.name)
+      end
+
+      expect(page).to have_content("Do Better")
+    end
   end
 end
