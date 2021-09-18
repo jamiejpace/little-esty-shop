@@ -32,7 +32,7 @@ class ItemsController < ApplicationController
       redirect_to merchant_item_path(@merchant, @item)
     else
       flash[:alert] = "Do Better"
-      render :edit
+      redirect_to edit_merchant_item_path(@merchant, @item)
     end
   end
 
