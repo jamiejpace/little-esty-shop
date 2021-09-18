@@ -6,8 +6,9 @@
   <h5>Top 5 Most Popular Items</h5>
   <% @merchant.top_five_items.each do |item| %>
   <span id="item-<%= item.id %>">
-    <%= link_to item.name, merchant_item_path(@merchant, item) %>
-    <%= item.revenue %><br>
+    <p><%= link_to item.name, merchant_item_path(@merchant, item) %></p>
+    <p>Total Revenue Generated: <%= number_to_currency(item.revenue / 100) %></p>
+    <p><%= "Top selling date for #{item.name} was #{item.date.strftime("%A, %B %e, %Y")}" %></p><br>
   </span>
   <% end %>
 </div>
