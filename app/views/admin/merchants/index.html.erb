@@ -21,5 +21,12 @@
     </span>
 <% end %>
 </div>
+<div id="top-merchants" class="col">
+<% @merchants.top_five_merchants.each do |merch| %>
+    <span id="id-<%= merch.name %>">
+    <p>Top Selling Day for<%= merch.name %> was <%= merch.date.strftime('%b %e, %Y') %> at: <%= number_to_currency(merch.total / 100) %></p>
+    </span>
+<% end %>
+</div>
 </div>
 </div>

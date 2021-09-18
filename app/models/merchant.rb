@@ -16,8 +16,8 @@ class Merchant < ApplicationRecord
   }
 
   def self.top_five_merchants
-    joins(items: { invoices: :transactions } ).group(:id)
-    .select(:name, "SUM(invoice_items.unit_price * invoice_items.quantity) AS total")
+    joins(:transactions).group(:id)
+    .select(:name, "SUM(invoice_items.unit_price * invoice_items.quantity) AS total, MAX(invoices.created_at) AS date")
     .where("transactions.result = ?", 0)
     .order(total: :desc).limit(5)
   end
