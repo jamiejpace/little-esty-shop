@@ -23,6 +23,6 @@ class Merchant < ApplicationRecord
   end
 
   def top_five_items
-    items.joins(invoice_items: {invoice: :transactions}).select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue").where("transactions.result = ?", 0).group(:id).order(revenue: :desc).limit(5)
+    items.joins(invoice_items: {invoice: :transactions}).select("items.*, sum(invoice_items.unit_price * invoice_items.quantity) AS revenue, MAX(invoices.created_at) AS date").where("transactions.result = ?", 0).group(:id).order(revenue: :desc).limit(5)
   end
 end
