@@ -9,4 +9,7 @@ class Item < ApplicationRecord
     joins(:invoices).where('invoice_items.status != ? and items.merchant_id = ?', 2, merchant.id).select(:name, 'invoices.id AS invoices_id', 'invoices.created_at AS invoices_created_at').order("invoices.created_at")
   }
 
+  scope :by_status, ->(status) {
+    where(status: status)
+  }
 end
