@@ -57,9 +57,9 @@ RSpec.describe Merchant, type: :model do
 
     let!(:customer) { create :customer }
 
-    let!(:invoice1) { create :invoice, { customer_id: customer.id, created_at: Date.today - 1} }
-    let!(:invoice2) { create :invoice, { customer_id: customer.id, created_at: Date.today } }
-    let!(:invoice3) { create :invoice, { customer_id: customer.id, created_at: Date.today } }
+    let!(:invoice1) { create :invoice, { customer_id: customer.id, created_at: DateTime.new(2021, 7, 1) } }
+    let!(:invoice2) { create :invoice, { customer_id: customer.id, created_at: DateTime.new(2021, 1, 1) } }
+    let!(:invoice3) { create :invoice, { customer_id: customer.id, created_at: DateTime.new(2030, 1, 1) } }
 
     let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 0 } }
     let!(:transaction2) { create :transaction, { invoice_id: invoice2.id, result: 1 } }
@@ -75,7 +75,7 @@ RSpec.describe Merchant, type: :model do
     let!(:inv_item5) { create :invoice_item, { invoice_id: invoice3.id, item_id: item5.id, unit_price: 100, quantity: 1 } }
 
     let!(:inv_item6) { create :invoice_item, { invoice_id: invoice2.id, item_id: item6.id, unit_price: 300, quantity: 1 } } # 4, 600 # 1200
-    let!(:inv_item7) { create :invoice_item, { invoice_id: invoice2.id, item_id: item7.id, unit_price: 300, quantity: 1 } }
+    let!(:inv_item7) { create :invoice_item, { invoice_id: invoice1.id, item_id: item7.id, unit_price: 300, quantity: 1 } }
 
     let!(:inv_item8) { create :invoice_item, { invoice_id: invoice2.id, item_id: item8.id, unit_price: 200, quantity: 1 } } # 5, 500 700
     let!(:inv_item9) { create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 300, quantity: 1 } }
@@ -86,17 +86,17 @@ RSpec.describe Merchant, type: :model do
     it 'has the top 5 merchants name, total, day' do
 
       expected = [
-        [merch4.name, 600],
-        [merch5.name, 500],
-        [merch2.name, 300],
-        [merch6.name, 150],
-        [merch3.name, 100]
+        [merch4.name, 600, DateTime.new(2021, 7, 1)],
+        [merch5.name, 500, DateTime.new(2021, 7, 1)],
+        [merch2.name, 300, DateTime.new(2021, 1, 1)],
+        [merch6.name, 150, DateTime.new(2021, 7, 1)],
+        [merch3.name, 100, DateTime.new(2021, 1, 1)]
       ]
       result = Merchant.top_five_merchants
-
       expected.each_with_index do |merchdata, i|
         expect(result[i].name).to eq(merchdata.first)
-        expect(result[i].total).to eq(merchdata.last)
+        expect(result[i].total).to eq(merchdata[1])
+        expect(result[i].date).to eq(merchdata.last)
       end
     end
   end
