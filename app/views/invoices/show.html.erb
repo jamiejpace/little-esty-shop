@@ -9,5 +9,12 @@
   <p><u>Item Name: <%= inv_item.item.name %></u><br>
   Quantity: <%= inv_item.quantity %><br>
   Unit Price: <%= number_to_currency(inv_item.unit_price) %><br>
-  Status: <%= inv_item.status %><br></p>
+  Status: <%= inv_item.status %> <br>
+  <div id="inv_item-<%= inv_item.id %>">
+    <%= form_with model: [@merchant, inv_item], local: true do |f| %>
+      <%= f.label :status %>
+      <%= f.select(:status, ['pending', 'packaged', 'shipped'], value: inv_item.status) %>
+      <%= f.submit 'Update Invoice Item' %>
+    <% end %> </p>
+  </div>
 <% end %><br>
