@@ -15,4 +15,13 @@ RSpec.describe 'Admin Merchant new' do
     expect(page).to have_content("Lisa Miller")
   end
 
+  it 'handles save failure' do
+    merchant = create(:merchant)
+    fill_in 'Name', with: ""
+    click_button 'Submit'
+
+    expect(page).to have_content("That's not a name, fool")
+    expect(current_path).to eq(new_admin_merchant_path)
+  end
+
 end

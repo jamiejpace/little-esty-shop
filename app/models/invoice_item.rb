@@ -4,5 +4,15 @@ class InvoiceItem < ApplicationRecord
   belongs_to :item
   belongs_to :invoice
 
+  validates_presence_of :status
+
   enum status: %w(pending packaged shipped)
+
+  scope :not_shipped, -> {
+    where.not(status: 2)
+  }
+
+  scope :revenue, -> {
+    sum("invoice_items.unit_price * invoice_items.quantity")
+  }
 end

@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::Base
-
   # before_action :set_github_info, only: :index
 
   def set_github_info

@@ -5,6 +5,7 @@ RSpec.describe InvoiceItem, type: :model do
   describe 'validations' do
     it { belong_to :item }
     it { belong_to :invoice }
+    it { should validate_presence_of :status }
   end
 
   describe 'enum' do
