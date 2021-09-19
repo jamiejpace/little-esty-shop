@@ -28,5 +28,9 @@ RSpec.describe Item, type: :model do
     it 'returns items by status enabled' do
       expect(@merchant_a.items.by_status("enabled")).to eq([@item_a])
     end
+
+    it 'has the next id' do
+      expect(Item.next_id).to eq(Item.maximum(:id).next)
+    end
   end
 end
