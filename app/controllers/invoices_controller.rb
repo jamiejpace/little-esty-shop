@@ -11,6 +11,7 @@ class InvoicesController < ApplicationController
   end
 
   private
+
   def current_merchant
     @merchant = Merchant.find(params[:merchant_id])
   end
