@@ -216,9 +216,9 @@ RSpec.describe Merchant, type: :model do
       expect(result.invoices_id).to eq(invoice1.id)
     end
 
-    it 'has get_highest_id' do
-      expected = Merchant.maximum(:id)
-      expect(Merchant.get_highest_id).to eq(expected)
+    it 'has next_id' do
+      expected = Merchant.maximum(:id).next
+      expect(Merchant.next_id).to eq(expected)
     end
   end
 end

@@ -11,8 +11,8 @@ class Merchant < ApplicationRecord
     where(status: status)
   }
 
-  def self.get_highest_id
-    maximum(:id) || 1
+  def self.next_id
+    maximum(:id).next || 1
   end
 
   def self.top_five_merchants
