@@ -134,14 +134,15 @@ RSpec.describe 'Merchant Dashboard Show Page' do
       end
 
       it 'lists names of ordered items not shipped' do
+        merchant = create(:merchant)
         bestitem = double("fake_item")
-        
+
         allow(bestitem).to receive(:name).and_return("Jasmine")
         allow(bestitem).to receive(:invoices_created_at).and_return(Date.new 1994, 12, 27)
         allow(bestitem).to receive(:invoices_id).and_return(21)
-        allow(Item).to receive(:merch_items_ship_ready).and_return([bestitem])
+        allow_any_instance_of(Merchant).to receive(:items_ready_to_ship).and_return([bestitem])
 
-        visit merchant_dashboard_path(merchant1)
+        visit merchant_dashboard_path(merchant)
 
         expect(page).to have_content("Item Name: Jasmine")
         expect(page).to have_content("Invoice ID: 21")

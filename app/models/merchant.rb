@@ -24,7 +24,7 @@ class Merchant < ApplicationRecord
 
   def items_ready_to_ship
     invoices.merge(InvoiceItem.not_shipped)
-    .select("items.name, invoices.id AS invoices_id, invoices.created_at AS invoices_created_at")
+    .select("items.name AS name, invoices.id AS invoices_id, invoices.created_at AS invoices_created_at")
     .order(:invoices_created_at)
   end
 

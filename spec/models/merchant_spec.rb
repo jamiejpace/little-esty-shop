@@ -162,16 +162,16 @@ RSpec.describe Merchant, type: :model do
   end
 
   describe 'class methods/scopes' do
-    let(:invoice) { create :invoice }
     let!(:merchant) { create :merchant }
     let!(:customer) { create :customer }
     let!(:customer2) { create :customer }
+    let!(:customer3) { create :customer }
     let!(:item1) { create :item, { merchant_id: merchant.id } }
     let!(:item2) { create :item, { merchant_id: merchant.id } }
     let!(:item3) { create :item, { merchant_id: merchant.id } }
     let!(:invoice1) { create :invoice, { customer_id: customer.id} }
     let!(:invoice2) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice3) { create :invoice, { customer_id: customer2.id} }
+    let!(:invoice3) { create :invoice, { customer_id: customer3.id } }
     let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 1} }
     let!(:transaction2) { create :transaction, { invoice_id: invoice2.id, result: 0 } }
     let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
@@ -185,6 +185,11 @@ RSpec.describe Merchant, type: :model do
       expect(result.first.customer_name).to eq(fav.first.first)
       expect(result.first.transaction_count).to eq(fav.first.last)
     end
+
+    it '#ordered_invoices' do
+      expect(merchant.ordered_invoices).to eq([invoice1, invoice2])
+    end
+
   end
 
   describe 'items ready to ship' do
@@ -209,6 +214,11 @@ RSpec.describe Merchant, type: :model do
       result = merchant1.items_ready_to_ship.first
       expect(result.name).to eq(item1.name)
       expect(result.invoices_id).to eq(invoice1.id)
+    end
+
+    it 'has get_highest_id' do
+      expected = Merchant.maximum(:id)
+      expect(Merchant.get_highest_id).to eq(expected)
     end
   end
 end
