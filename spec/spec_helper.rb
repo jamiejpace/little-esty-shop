@@ -14,6 +14,7 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'webmock/rspec'
 
 SimpleCov.start do
   add_filter "spec/rails_helper.rb"
@@ -99,4 +100,12 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  config.before(:each) do
+    github_response = {
+      body: {name: 'little-esty-shop'}
+    }
+    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
+    .to_return(body: github_response.to_json)
+  end
 end
