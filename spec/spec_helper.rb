@@ -109,11 +109,11 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
-  config.before(:each) do
-    github_response = {
-      body: {name: 'little-esty-shop'}
-    }
-    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
-    .to_return(body: github_response.to_json)
-  end
+  # config.before(:each) do
+    # github_response = {
+    #   body: {name: 'little-esty-shop'}
+    # }
+    # stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
+    # .to_return(body: github_response.to_json)
+  # end
 end
