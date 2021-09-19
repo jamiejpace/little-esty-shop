@@ -1,6 +1,6 @@
 require 'rails_helper'
 require 'set'
-
+#rspec spec/services/github_service_spec.rb
 RSpec.describe 'github api' do
   describe 'repo name' do
     let(:github_response) { GitHubService.repo_info }
@@ -76,6 +76,46 @@ RSpec.describe 'github api' do
 
       expect(repo_pulls[:body]).to be_kind_of(Array)
       expect(repo_pulls[:body].length).to eq(2)
+    end
+  end
+
+  describe 'helper methods' do
+    let(:turing_staff) { %w(BrianZanti timomitchel scottalexandra jamisonordway) }
+    it 'returns contributors names' do
+      return_value = [
+        { login: 'cdelpone' },
+        { login: 'tannerdale' },
+        { login: 'jamisonordway' }
+      ]
+
+      allow(GitHubService).to receive(:repo_contributors).and_return(return_value)
+
+      expect(GitHubService.contributor_names).to eq(['cdelpone', 'tannerdale'])
+    end
+
+    it 'returns contributors names and commits' do
+      return_value = ['cdelpone', 'tannerdale']
+      filtered = [
+        { login: 'cdelpone' },
+        { login: 'tannerdale' }
+      ]
+      expected = ["cdelpone with 2 commits", "tannerdale with 2 commits"]
+
+      allow(GitHubService).to receive(:filter_results).and_return(filtered)
+      allow(GitHubService).to receive(:contributor_names).and_return(return_value)
+
+      expect(GitHubService.names_and_commits).to eq(expected)
+    end
+
+    it 'filters merge from results' do
+    commits = Set.new([
+        { commit: { message: 'Merge this' } },
+        { commit: { message: 'Do that' } }
+      ])
+
+      allow(GitHubService).to receive(:repo_commits).and_return(commits)
+
+      expect(GitHubService.filter_results('Keenan').length).to eq(1)
     end
   end
 end
