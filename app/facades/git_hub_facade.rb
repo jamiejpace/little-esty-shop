@@ -1,40 +1,35 @@
 class GitHubFacade
-  def  fetch_git_hub_info
-    git_hub_info = GitHubService.get_git_hub_info
-    GitHubPoro.new(git_hub_info)
-  end
+  TURING_STAFF = %w(BrianZanti timomitchel scottalexandra jamisonordway)
 
   def initialize(repo_name)
     @repo_name = repo_name
   end
 
-  def contributor_names
-    contributor_info.filter_map do |contrib|
-      contrib[:login] unless turing_staff.include?(contrib[:login])
-    end
-  end
-
-  def contribution_count
-    contributor_info.sum do |contrib|
-      contrib[:contributions]
-    end
+  def repo_names_and_commits
+    contributor_info
   end
 
   def repo_name
     repo_name_info
   end
 
+  def pulls_count
+    pulls_request_info.count do |pull|
+      !TURING_STAFF.include?(pull[:user][:login])
+    end
+  end
+
   private
 
   def contributor_info
-    @contributor_info ||= GitHubService.repo_contributors(@repo_name)
+    @contributor_info ||= GitHubService.names_and_commits
   end
 
   def repo_name_info
-    @repo_name ||= GitHubService.repo_name(@repo_name)
+    @repo_name ||= GitHubService.repo_name
   end
 
-  def pull_request_info
-    @pull_count ||= GitHubService.pull_count(@repo_name)
+  def pulls_request_info
+    @pulls_count ||= GitHubService.repo_pulls
   end
 end
