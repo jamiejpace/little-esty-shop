@@ -5,16 +5,9 @@ class Customer < ApplicationRecord
   has_many :transactions, through: :invoices
 
   scope :top_5_customers, -> {
-    # joins(:transactions).where('transactions.result = ?', 0)
-    # joins(:transactions).merge(Transaction.successful)
-    result = joins(:transactions).merge(Transaction.successful)
+    full_names.joins(:transactions).merge(Transaction.successful)
     .group(:id).order(count: :desc).limit(5)
-    # .pluck(:first_name, :last_name, Arel.sql("COUNT(transactions.id)"))
     .select(:first_name, :last_name, "COUNT(transactions.id) AS transaction_count")
-
-    result.map do |r|
-      [r.first_name, r.last_name, r.transaction_count]
-    end
   }
 
   scope :full_names, -> {

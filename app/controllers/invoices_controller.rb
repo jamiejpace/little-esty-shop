@@ -2,7 +2,7 @@ class InvoicesController < ApplicationController
   before_action :current_merchant
 
   def index
-    @invoices = Invoice.for_merchant(@merchant)
+    @invoices = @merchant.ordered_invoices
   end
 
   def show
