@@ -21,6 +21,14 @@ SimpleCov.start do
 end
 
 RSpec.configure do |config|
+  config.before :each do
+    allow_any_instance_of(GitHubFacade).to receive(:contributor_names)
+    .and_return(%w(Tanner Matt Christina Jamie))
+    allow_any_instance_of(GitHubFacade).to receive(:contribution_count)
+    .and_return(30)
+    allow_any_instance_of(GitHubFacade).to receive(:repo_name)
+    .and_return('little-esty-shop')
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
