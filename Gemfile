@@ -50,6 +50,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'shoulda-matchers'
   gem 'orderly'
+  gem 'webmock'
 end
 
 gem 'database_cleaner-active_record'

@@ -6,3 +6,5 @@
     <%= " and #{name}" %>
   <% end %>
 <% end %>
+
+### FOOTER ###
