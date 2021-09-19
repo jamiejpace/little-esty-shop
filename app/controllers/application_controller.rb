@@ -3,7 +3,6 @@ class ApplicationController < ActionController::Base
 
   def self.set_github_info
     git_hub_info = GitHubFacade.fetch_git_hub_info
-    require 'pry'; binding.pry
     # conn = Faraday.new('https://api.github.com')
     # repo_response = conn.get('/repos/TannerDale/little-esty-shop')
     # repo_response = Faraday.get('https://api.github.com/repos/tannerdale/little-esty-shop')
