@@ -15,21 +15,19 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = @merchant.items.create!(item_params.merge({ id: Item.maximum(:id).next }))
-    redirect_to merchant_items_path(@merchant)
+    item = Item.new(item_params.merge({id: Item.next_id, merchant_id: params[:merchant_id]}))
+    if item.save
+      redirect_to merchant_items_path(@merchant)
+    end
   end
 
   def edit
   end
 
   def update
-    if params[:item][:status].present?
-      @item.update(status: params[:item][:status])
+    if @item.update(item_params)
       flash[:success] = "Successfully Updated Item"
-      redirect_to merchant_items_path(@merchant)
-    elsif @item.update(item_params)
-      flash[:success] = "Successfully Updated Item"
-      redirect_to merchant_item_path(@merchant, @item)
+      updates_redirect_location
     else
       flash[:alert] = "Do Better"
       redirect_to edit_merchant_item_path(@merchant, @item)
@@ -37,6 +35,15 @@ class ItemsController < ApplicationController
   end
 
   private
+
+  def updates_redirect_location
+    if params[:item][:status].present?
+      redirect_to merchant_items_path(@merchant)
+    else
+      redirect_to merchant_item_path(@merchant, @item)
+    end
+  end
+
   def current_item
     @item = Item.find(params[:id])
   end
