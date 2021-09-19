@@ -6,10 +6,11 @@
     </a>
 
     <ul class="nav col-md-4 justify-content-end">
-      <% cache :git_hub_footer, expires_in: 2.minutes do %>
-        <% git_hub = GitHubFacade.new('little-esty-shop') %>
-        <li>Link for repo: <%= link_to git_hub.repo_name, 'https://github.com/TannerDale/little-esty-shop' %></li>
-        <li class="nav-item"><p class="nav-link px-2 text-muted"> <%= git_hub.contributor_names.to_sentence %> collaborated on this project, making <%=  git_hub.contribution_count %> commits and generating <%# session[:pulls_count] %> pull requests.</p></li>
+      <% cache :github_footer, expires_in: 2.minutes do %>
+        <% github = GitHubFacade.new('little-esty-shop') %>
+        <li>Link for repo: <%= link_to github.repo_name, 'https://github.com/TannerDale/little-esty-shop' %></li>
+
+        <li class="nav-item"><p class="nav-link px-2 text-muted">Collaborators: <%= github.repo_names_and_commits.to_sentence %>, generating <%= github.pulls_count %> pull requests.</p></li>
       <% end %>
     </ul>
   </footer>
