@@ -46,12 +46,15 @@ RSpec.describe Customer, type: :model do
           ["#{cust5.first_name} #{cust5.last_name}", 1]
         ]
         result = Customer.top_5_customers
-        
+
         expected.each_with_index do |exp, i|
           expect(result[i].customer_name).to eq(exp.first)
           expect(result[i].transaction_count).to eq(exp.last)
         end
+      end
 
+      it 'has a full name' do
+        expect(cust1.full_name).to eq("#{cust1.first_name} #{cust1.last_name}")
       end
     end
   end
