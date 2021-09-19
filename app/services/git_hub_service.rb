@@ -1,11 +1,5 @@
 class GitHubService
   class << self
-    def get_git_hub_info
-      {
-        repo_name: repo_info[:name]
-      }
-    end
-
     def repo_info
       response = conn.get('/repos/tannerdale/little-esty-shop')
       parse_data(response)
@@ -17,6 +11,17 @@ class GitHubService
 
     def parse_data(response)
       JSON.parse(response.body, symbolize_names: true)
+    end
+
+    def repo_name
+      response = conn.get('/repos/tannerdale/little-esty-shop')
+      parse_data(response)[:name]
+    end
+
+    def repo_contributors(repo_name)
+      sleep 5
+      response = conn.get('/repos/tannerdale/little-esty-shop/contributors')
+      parse_data(response)
     end
   end
 end
