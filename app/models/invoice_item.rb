@@ -13,6 +13,6 @@ class InvoiceItem < ApplicationRecord
   }
 
   scope :revenue, -> {
-    sum("invoice_items.unit_price * invoice_items.quantity")
+    sum("unit_price * quantity")
   }
 end
