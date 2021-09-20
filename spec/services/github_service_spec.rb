@@ -19,50 +19,33 @@ RSpec.describe 'github api' do
   end
 
   describe 'repo contributors' do
-    let(:repo_contributors) { GitHubService.contributor_names }
+    let(:repo_contributors) { GitHubService.contribution_stats }
 
     it 'returns repo contributors' do
-      repo_contributors = {
-        body: ['Lisa Miller', 'Catherine Duke']
-      }
-      stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/contributors")
-      .to_return(body: repo_contributors.to_json)
+      contribution_stats = [
+        {
+          total: 10,
+          author: {login: 'Lisa Miller'}
+        },
+        {
+         total: 12,
+         author: {login: 'Catherine Duke'}
+        }
+      ]
 
-      expect(repo_contributors[:body]).to be_kind_of(Array)
-      expect(repo_contributors[:body]).to eq(['Lisa Miller', 'Catherine Duke'])
+      stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/stats/contributors")
+      .to_return(body: contribution_stats.to_json)
+      expected = {
+         'Lisa Miller' => 10,
+         'Catherine Duke' => 12
+      }
+
+      expect(repo_contributors).to be_kind_of(Set)
+      expect(repo_contributors.length).to eq(2)
     end
   end
 
-  describe 'repo commits' do
-    let(:repo_commits) { GitHubService.repo_commits }
 
-    it 'returns repo commits' do
-      repo_commits = {
-        body: Set.new([{
-        "sha": "525d2eec8fa45eaed5ab62328d809b6bca05357c",
-        "node_id": "MDY6Q29tbWl0NDA2MTI0MTY5OjUyNWQyZWVjOGZhNDVlYWVkNWFiNjIzMjhkODA5YjZiY2EwNTM1N2M=",
-        "commit": {
-            "author": {
-                "name": "Christina Delpone",
-                "email": "81711519+cdelpone@users.noreply.github.com",
-                "date": "2021-09-18T22:00:41Z"
-            },
-            "committer": {
-                "name": "GitHub",
-                "email": "noreply@github.com",
-                "date": "2021-09-18T22:00:41Z"
-            },
-            "message": "Merge pull request #79 from TannerDale/admin_stories\n\nThank you! This looks good."
-            }
-        }])
-      }
-      stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/commits?author=cdelpone")
-      .to_return(body: repo_commits.to_json)
-
-      expect(repo_commits[:body]).to be_kind_of(Set)
-      expect(repo_commits[:body].first[:commit].length).to eq(3)
-    end
-  end
 
   describe 'repo pulls' do
     let(:repo_pulls) { GitHubService.repo_pulls }
@@ -83,39 +66,39 @@ RSpec.describe 'github api' do
     let(:turing_staff) { %w(BrianZanti timomitchel scottalexandra jamisonordway) }
     it 'returns contributors names' do
       return_value = [
-        { login: 'cdelpone' },
-        { login: 'tannerdale' },
-        { login: 'jamisonordway' }
+        {
+          author: {login: 'cdelpone'},
+          total: 38
+        },
+        {
+          author: {login: 'tannerdale'},
+          total: 75
+        },
+        {
+          author: {login: 'jamisonordway'},
+          total: 2
+        }
       ]
+      expected = {
+        'cdelpone' => 38,
+        'tannerdale' => 75
+      }
+      allow(GitHubService).to receive(:contribution_stats).and_return(return_value)
 
-      allow(GitHubService).to receive(:repo_contributors).and_return(return_value)
-
-      expect(GitHubService.contributor_names).to eq(['cdelpone', 'tannerdale'])
+      expect(GitHubService.commits_by_contributor).to eq(expected)
     end
 
     it 'returns contributors names and commits' do
-      return_value = ['cdelpone', 'tannerdale']
-      filtered = [
-        { login: 'cdelpone' },
-        { login: 'tannerdale' }
-      ]
-      expected = ["cdelpone with 2 commits", "tannerdale with 2 commits"]
+      return_value = {
+        'cdelpone' => 38,
+        'tannerdale' => 75
+      }
 
-      allow(GitHubService).to receive(:filter_results).and_return(filtered)
-      allow(GitHubService).to receive(:contributor_names).and_return(return_value)
+      expected = ["cdelpone with 38 commits", "tannerdale with 75 commits"]
+
+      allow(GitHubService).to receive(:commits_by_contributor).and_return(return_value)
 
       expect(GitHubService.names_and_commits).to eq(expected)
-    end
-
-    it 'filters merge from results' do
-    commits = Set.new([
-        { commit: { message: 'Merge this' } },
-        { commit: { message: 'Do that' } }
-      ])
-
-      allow(GitHubService).to receive(:repo_commits).and_return(commits)
-
-      expect(GitHubService.filter_results('Keenan').length).to eq(1)
     end
   end
 end
