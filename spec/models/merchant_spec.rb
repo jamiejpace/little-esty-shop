@@ -95,7 +95,7 @@ RSpec.describe Merchant, type: :model do
       result = Merchant.top_five_merchants
       expected.each_with_index do |merchdata, i|
         expect(result[i].name).to eq(merchdata.first)
-        expect(result[i].total).to eq(merchdata[1])
+        expect(result[i].revenue).to eq(merchdata[1])
         expect(result[i].date).to eq(merchdata.last)
       end
     end
