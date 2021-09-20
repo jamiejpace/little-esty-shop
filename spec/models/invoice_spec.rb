@@ -43,6 +43,23 @@ RSpec.describe Invoice, type: :model do
       it '#pending_invoices' do
         expect(Invoice.pending_invoices).to eq([invoice1, invoice2])
       end
+
+      it 'has a transaction count' do
+        result = Invoice.joins(:transactions).transactions_count.group(:id)
+        result = result.sum(&:transaction_count)
+
+        expect(result).to eq(2)
+      end
+
+      it 'has total revenues' do
+        expected = [inv_item1, inv_item2, inv_item3].sum do |inv|
+          inv.unit_price * inv.quantity
+        end
+        result = Invoice.joins(:invoice_items).total_revenues.group(:id)
+        result = result.sum(&:revenue)
+
+        expect(result).to eq(expected)
+      end
     end
   end
 
