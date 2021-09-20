@@ -21,34 +21,22 @@ class GitHubService
       parse_data(response)[:name]
     end
 
-    def repo_contributors
+    def contribution_stats
       sleep 5
-      response = conn.get('/repos/tannerdale/little-esty-shop/contributors')
-      parse_data(response)
-    end
-
-    def contributor_names
-      all_contribs = repo_contributors.map do |contrib|
-        contrib[:login]
-      end
-      all_contribs - TURING_STAFF
-    end
-
-    def names_and_commits
-      contributor_names.map do |name|
-        count = filter_results(name).length
-        "#{name} with #{count} commits"
-      end
-    end
-
-    def repo_commits(name)
-      response = conn.get("/repos/tannerdale/little-esty-shop/commits?author=#{name}&per_page=100&page_count=2")
+      response = conn.get('/repos/tannerdale/little-esty-shop/stats/contributors')
       Set.new(parse_data(response))
     end
 
-    def filter_results(name)
-      repo_commits(name).delete_if do |result|
-        result[:commit][:message].start_with?("Merge")
+    def commits_by_contributor
+      contribution_stats.filter_map do |person|
+        username = person[:author][:login]
+        [username, person[:total]] unless TURING_STAFF.include?(username)
+      end.to_h
+    end
+
+    def names_and_commits
+      commits_by_contributor.map do |name, count|
+        "#{name} with #{count} commits"
       end
     end
 
