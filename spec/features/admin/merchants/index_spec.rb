@@ -75,11 +75,11 @@ RSpec.describe 'Admin Merchant Index' do
       allow(merch3).to receive(:name).and_return('Christina')
       allow(merch4).to receive(:name).and_return('Carmen')
       allow(merch5).to receive(:name).and_return('Sandiago')
-      allow(merch1).to receive(:total).and_return(100)
-      allow(merch2).to receive(:total).and_return(200)
-      allow(merch3).to receive(:total).and_return(300)
-      allow(merch4).to receive(:total).and_return(400)
-      allow(merch5).to receive(:total).and_return(500)
+      allow(merch1).to receive(:revenue).and_return(100)
+      allow(merch2).to receive(:revenue).and_return(200)
+      allow(merch3).to receive(:revenue).and_return(300)
+      allow(merch4).to receive(:revenue).and_return(400)
+      allow(merch5).to receive(:revenue).and_return(500)
       allow(merch1).to receive(:date).and_return(DateTime.new(2021, 1, 1))
       allow(merch2).to receive(:date).and_return(DateTime.new(2021, 1, 1))
       allow(merch3).to receive(:date).and_return(DateTime.new(2021, 1, 1))
@@ -94,7 +94,7 @@ RSpec.describe 'Admin Merchant Index' do
         [merch5, merch4, merch3, merch2, merch1].each do |merch|
           within "#merch-#{merch.name}"
           expect(page).to have_content(merch.name)
-          expect(page).to have_content("$#{merch.total / 100}.00")
+          expect(page).to have_content("$#{merch.revenue / 100}.00")
           expect(page).to have_content(merch.date.strftime('%b%e, %Y'))
         end
       end

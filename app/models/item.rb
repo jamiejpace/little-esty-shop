@@ -10,4 +10,8 @@ class Item < ApplicationRecord
   scope :by_status, ->(status) {
     where(status: status)
   }
+
+  def self.next_id
+    maximum(:id).next
+  end
 end

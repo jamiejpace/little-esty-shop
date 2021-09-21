@@ -56,6 +56,15 @@ RSpec.describe Customer, type: :model do
       it 'has a full name' do
         expect(cust1.full_name).to eq("#{cust1.first_name} #{cust1.last_name}")
       end
+
+      it 'has all customer full names' do
+        expected = [cust1, cust2, cust3, cust4, cust5, cust6].map do |cust|
+          "#{cust.first_name} #{cust.last_name}"
+        end
+        result = Customer.full_names.map(&:customer_name)
+
+        expect(result).to eq(expected)
+      end
     end
   end
 end
