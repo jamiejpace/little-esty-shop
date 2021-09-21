@@ -14,12 +14,25 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'simplecov'
+require 'webmock/rspec'
 
 SimpleCov.start do
   add_filter "spec/rails_helper.rb"
 end
 
 RSpec.configure do |config|
+  config.before :each do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(1)
+
+    allow_any_instance_of(GitHubService).to receive(:repo_names_and_commits)
+    .and_return(%w(Tanner Matt Christina Jamie))
+
+    allow_any_instance_of(GitHubService).to receive(:pulls_count)
+    .and_return(30)
+
+    allow_any_instance_of(GitHubService).to receive(:repo_name)
+    .and_return('little-esty-shop')
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -99,4 +112,12 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
+  # config.before(:each) do
+    # github_response = {
+    #   body: {name: 'little-esty-shop'}
+    # }
+    # stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
+    # .to_return(body: github_response.to_json)
+  # end
 end

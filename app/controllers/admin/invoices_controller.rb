@@ -1,4 +1,4 @@
-class Admin::InvoicesController < ApplicationController
+class Admin::InvoicesController < Admin::BaseController
   before_action :current_invoice, except: :index
 
   def index

@@ -6,8 +6,11 @@
     </a>
 
     <ul class="nav col-md-4 justify-content-end">
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted"><h6>Github Repository <%= session[:repo] %></h6></a></li>
-      <!-- Below could use a definite refactor; couldn't get it working with an if/else statement but that's probably a better idea -->
-      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted"> <%= session[:user_names][0] + ", " + session[:user_names][1] + ", " + session[:user_names][2] + ", and " + session[:user_names][3] %> collaborated on this project, making <%= session[:commits] %> commits and generating <%=  %> pull requests.</a></li>
+      <% cache :github_footer, expires_in: 2.minutes do %>
+        <% github = GitHubService.new('little-esty-shop') %>
+        <li>Link for repo: <%= link_to github.repo_name, 'https://github.com/TannerDale/little-esty-shop' %></li>
+
+        <li class="nav-item"><p class="nav-link px-2 text-muted">Collaborators: <%= github.repo_names_and_commits.to_sentence %>, generating <%= github.pulls_count %> pull requests.</p></li>
+      <% end %>
     </ul>
   </footer>

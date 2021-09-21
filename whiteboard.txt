@@ -6,3 +6,51 @@
     <%= " and #{name}" %>
   <% end %>
 <% end %>
+
+### Spec Helper ### Spec  config.before(:each) do
+    repo_name = {
+      body: {name: 'little-esty-shop'}
+    }
+    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
+    .to_return(body: repo_name.to_json)
+
+    repo_contributors = {
+      body: {name: 'little-esty-shop'}
+    }
+    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/contributors")
+    .to_return(body: repo_contributors.to_json)
+
+    repo_commits = {
+      body: {name: 'little-esty-shop'}
+    }
+    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/commits?author=cdelpone")
+    .to_return(body: repo_commits.to_json)
+
+    repo_pulls = {
+      body: {name: 'little-esty-shop'}
+    }
+    stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/pulls?state=closed&per_page=100")
+    .to_return(body: repo_pulls.to_json)
+  end
+
+  ### github_service_spec###
+  RSpec.describe 'github api' do
+    describe 'repo response' do
+      let(:repo_name) { GitHubClient.repo_name }
+      it 'returns data' do
+        require "pry"; binding.pry
+        expect(repo_name).to be_kind_of(Hash)
+        expect(repo_name).to have_key(:body)
+        expect(repo_name[:body][:name]).to eq('little-esty-shop')
+      end
+    end
+
+    describe 'repo response' do
+      let(:github_response) { GitHubClient.contributor_names }
+
+      it 'returns data' do
+        expect(github_response).to be_kind_of(Array)
+        require "pry"; binding.pry
+        expect(github_response[:body][:name]).to include('little-esty-shop')
+      end
+    end

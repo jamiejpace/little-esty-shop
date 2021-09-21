@@ -13,4 +13,12 @@ Rails.application.routes.draw do
     resources :merchants, except: :delete
     resources :invoices, only: [:index, :show, :update]
   end
+
+  resource :users, only: :create
+  get '/profile', controller: :users, action: :show
+  get '/sign_up', controller: :users, action: :new
+
+  resources :sessions, only: :create
+  get '/login', controller: :sessions, action: :new
+  delete '/logout', controller: :sessions, action: :destroy
 end
