@@ -54,3 +54,7 @@
         expect(github_response[:body][:name]).to include('little-esty-shop')
       end
     end
+
+
+### Check in notes ###
+Should the footer reach directly to the facade?
