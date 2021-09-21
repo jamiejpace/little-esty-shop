@@ -6,7 +6,7 @@ class GitHubFacade
   end
 
   def repo_names_and_commits
-    contribution_info
+    contributor_commits
   end
 
   def repo_name
@@ -21,8 +21,8 @@ class GitHubFacade
 
   private
 
-  def contribution_info
-    @contributor_info ||= GitHubService.names_and_commits
+  def contributor_commits
+    @contributor_commits ||= GitHubService.names_and_commits
   end
 
   def repo_name_info
