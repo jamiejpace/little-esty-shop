@@ -22,10 +22,14 @@ end
 
 RSpec.configure do |config|
   config.before :each do
+    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(1)
+
     allow_any_instance_of(GitHubFacade).to receive(:repo_names_and_commits)
     .and_return(%w(Tanner Matt Christina Jamie))
+
     allow_any_instance_of(GitHubFacade).to receive(:pulls_count)
     .and_return(30)
+
     allow_any_instance_of(GitHubFacade).to receive(:repo_name)
     .and_return('little-esty-shop')
   end

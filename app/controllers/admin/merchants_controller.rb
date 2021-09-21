@@ -1,4 +1,4 @@
-class Admin::MerchantsController < ApplicationController
+class Admin::MerchantsController < Admin::BaseController
   before_action :find_merchant, except: [:new, :create, :index]
 
   def index
