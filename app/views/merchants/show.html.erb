@@ -1,17 +1,27 @@
-<%= @merchant.name %>
-
-<%= link_to 'Items', merchant_items_path(@merchant) %>
-<%= link_to 'Invoices', merchant_invoices_path(@merchant) %><br>
-
-<h5>Top 5 customers:</h5>
-<% @customers.each do |customer| %><br>
-    Customer Name: <%= customer.customer_name %><br>
-    Number of Successful Transactions: <%= customer.transaction_count %><br>
-<% end %>
-
+<%= render partial: 'shared/merchant_navtabs'  %>
+<h1><%= @merchant.name %></h1>
+<h5>Top 5 Customers</h5>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Successful Transactions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @customers.each_with_index do |customer, i| %>
+    <tr>
+      <th scope="row"><%= i + 1 %></th>
+      <td><%= customer.customer_name %></td>
+      <td><%= customer.transaction_count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table><br>
 <h5>Items Ready to Ship:</h5>
 <% @items.each do |item| %><br>
-    Item Name: <%= item.name %><br>
-    Created at: <%= item.invoices_created_at.strftime('%A, %B %-d, %Y') %><br>
-    Invoice ID: <%= link_to item.invoices_id , merchant_invoice_path(@merchant.id, item.invoices_id) %><br>
+  Item Name: <%= item.name %><br>
+  Created at: <%= item.invoices_created_at.strftime('%A, %B %-d, %Y') %><br>
+  Invoice ID: <%= link_to item.invoices_id , merchant_invoice_path(@merchant.id, item.invoices_id) %><br>
 <% end %>

@@ -1,6 +1,7 @@
 <%= render partial: 'shared/merchant_navtabs'  %>
 <h1>Merchant Invoices</h1>
-
-<% @invoices.each do |invoice| %>
-  <%= link_to invoice.id, merchant_invoice_path(@merchant, invoice) %>
-<% end %>
+<ul class="list-group">
+  <% @invoices.each do |invoice| %>
+    <li class="list-group-item"><%= link_to invoice.id, merchant_invoice_path(@merchant, invoice) %></li>
+  <% end %>
+</ul>

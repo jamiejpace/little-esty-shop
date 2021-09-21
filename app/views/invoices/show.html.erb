@@ -1,20 +1,47 @@
+<%= render partial: 'shared/merchant_navtabs'  %>
 <h1>Invoice Number: <%= @invoice.id %></h1>
 <h4>Invoice Details</h4>
-<p>Invoice Status: <%= @invoice.status %></p>
-<p>Created at: <%= @invoice.created_at.strftime("%A, %B %e, %Y") %></p>
-<p>Customer Name: <%= @invoice.customer.full_name %></p>
-<p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
-<p><strong>Item Details</strong></p>
-<% @invoice_items.each do |inv_item|  %>
-  <p><u>Item Name: <%= inv_item.item.name %></u><br>
-  Quantity: <%= inv_item.quantity %><br>
-  Unit Price: <%= number_to_currency(inv_item.unit_price) %><br>
-  Status: <%= inv_item.status %> <br>
-  <div id="inv_item-<%= inv_item.id %>">
-    <%= form_with model: [@merchant, inv_item], local: true do |f| %>
-      <%= f.label :status %>
-      <%= f.select(:status, ['pending', 'packaged', 'shipped'], value: inv_item.status) %>
-      <%= f.submit 'Update Invoice Item' %>
-    <% end %> </p>
+<div class="container">
+  <div class="row border">
+    <div class="col border">
+      <p>Invoice Status: <%= @invoice.status %></p>
+    </div>
+    <div class="col border">
+      <p>Created at: <%= @invoice.created_at.strftime("%A, %B %e, %Y") %></p>
+    </div>
   </div>
-<% end %><br>
+  <div class="row border">
+    <div class="col border">
+      <p>Customer Name: <%= @invoice.customer.full_name %></p>
+    </div>
+    <div class="col border">
+      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue) %></p>
+    </div>
+  </div>
+</div><br>
+<h4>Item Details</h4>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Item Name</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Unit Price</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @invoice_items.each do |inv_item|  %>
+    <tr>
+      <td><%= inv_item.item.name %></td>
+      <td><%= inv_item.quantity %></td>
+      <td><%= number_to_currency(inv_item.unit_price) %></td>
+      <td><div id="inv_item-<%= inv_item.id %>">
+          <%= form_with model: [@merchant, inv_item], local: true do |f| %>
+            <%= f.select(:status, ['pending', 'packaged', 'shipped'], value: inv_item.status) %>
+            <%= f.submit 'Update' %>
+          <% end %>
+        </div></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
