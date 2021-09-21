@@ -6,7 +6,7 @@ class GitHubService
   end
 
   def repo_names_and_commits
-    contributor_commits
+    names_and_commits
   end
 
   def repo_name
@@ -20,7 +20,7 @@ class GitHubService
   end
 
   def commits_by_contributor
-    contribution_stats.filter_map do |person|
+    contributor_commits.filter_map do |person|
       username = person[:author][:login]
       [username, person[:total]] unless TURING_STAFF.include?(username)
     end.to_h
@@ -35,7 +35,7 @@ class GitHubService
   private
 
   def contributor_commits
-    @contributor_commits ||= GitHubClient.names_and_commits
+    @contributor_commits ||= GitHubClient.contribution_stats
   end
 
   def repo_name_info

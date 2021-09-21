@@ -35,16 +35,11 @@ RSpec.describe 'github api' do
 
       stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop/stats/contributors")
       .to_return(body: contribution_stats.to_json)
-      expected = {
-         'Lisa Miller' => 10,
-         'Catherine Duke' => 12
-      }
 
       expect(repo_contributors).to be_kind_of(Set)
       expect(repo_contributors.length).to eq(2)
     end
   end
-
 
 
   describe 'repo pulls' do
@@ -61,5 +56,4 @@ RSpec.describe 'github api' do
       expect(repo_pulls[:body].length).to eq(2)
     end
   end
-
 end

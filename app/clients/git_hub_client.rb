@@ -26,7 +26,6 @@ class GitHubClient
       Set.new(parse_data(response))
     end
 
-
     def repo_pulls
       # need to account for second page of results
       response = conn.get('/repos/tannerdale/little-esty-shop/pulls?state=closed&per_page=100')
