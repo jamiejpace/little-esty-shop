@@ -48,10 +48,6 @@ class ItemsController < ApplicationController
     @item = Item.find(params[:id])
   end
 
-  # def current_merchant
-  #   @merchant = Merchant.find(params[:merchant_id])
-  # end
-
   def item_params
     params.require(:item).permit(:name, :description, :unit_price, :status)
   end
