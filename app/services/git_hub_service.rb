@@ -22,7 +22,6 @@ class GitHubService
     end
 
     def contribution_stats
-      sleep 5
       response = conn.get('/repos/tannerdale/little-esty-shop/stats/contributors')
       Set.new(parse_data(response))
     end
@@ -41,7 +40,7 @@ class GitHubService
     end
 
     def repo_pulls
-      #need to account for second page of results
+      # need to account for second page of results
       response = conn.get('/repos/tannerdale/little-esty-shop/pulls?state=closed&per_page=100')
       parse_data(response)
     end
