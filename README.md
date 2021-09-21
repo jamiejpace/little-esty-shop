@@ -1,38 +1,74 @@
-# Little Esty Shop
+###  Besty Esty
+## Table of contents
+* [General info](#general-info)
+* [Screenshots](#screenshots)
+* [Learning Goals](#learning-goals)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Features](#features)
+* [Status](#status)
+* [Contact](#contact)
 
-## Background and Description
+## General info
+Besty Esty is a 10 day, 4 person group project that builds a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+## Screenshots
 
-"Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
+## Benchmark Achievements
+* Designed a normalized database schema and defining model relationships.
+* Utilized advanced routing techniques including namespacing to organize and group like functionality together.
+* Utilized advanced ActiveRecord and SQL techniques to perform complex database queries.
+* Consumed a public API utilizing facades and services with query results saved and updated through caching.
 
-## Learning Goals
-- Practice designing a normalized database schema and defining model relationships
-- Utilize advanced routing techniques including namespacing to organize and group like functionality together.
-- Utilize advanced active record techniques to perform complex database queries
-- Practice consuming a public API while utilizing POROs as a way to apply OOP principles to organize code
-
-## Requirements
-- must use Rails 5.2.x
-- must use PostgreSQL
-- all code must be tested via feature tests and model tests, respectively
-- must use GitHub branching, team code reviews via GitHub comments, and github projects to track progress on user stories
-- must include a thorough README to describe the project
-- must deploy completed code to Heroku
+## Technologies
+Project is created with:
+* Ruby version: 2.7.2
+* Rails 5.2.5
+* HTML 5
+* Heroku
+* Primary Gems: Faraday, RSpec, Capybara, SimpleCov, Webmock
 
 ## Setup
+To run this program, save a copy of this repository locally. In the MacOS
+application 'Terminal,' navigate into the `little-esty-shop` directory.
+Then, run it using ruby (note: '$' is not typed).
+1. Clone the repo using the web url:
+   ```
+   $ git clone https://github.com/TannerDale/little-esty-shop.git
+   ```
+   or with a password-protected SSH key:
+   ```
+   $ git clone git@github.com:TannerDale/little-esty-shop.git
+   ```
+2. Change into the directory:
+   ```
+   $ cd ./little-esty-shop
+   ```
+3. Enable development caching:
+   ```
+   $ rails dev:cache
+   ```
+4. Then enable server by entering the following into Terminal:
+   ```
+   $ rails s
+   ```
+5. Then open a browser and navigate to:
+   ```
+   localhost:3000
+   ```
 
-This project requires Ruby 2.7.2.
+## Features
+* GitHub API continuously updated to ensure accurate data.
+* Merchant dashboard and password protected admin dashboard.
+*
 
-* Fork this repository
-* Clone your fork
-* From the command line, install gems and set up your DB:
-    * `bundle`
-    * `rails db:create`
-* Run the test suite with `bundle exec rspec`.
-* Run your development server with `rails s` to see the app in action.
+## Future Enhancements:
+* Optimize user interface
 
-## Phases
+## Contact
+Created by
+* [@TannderDale](https://github.com/TannerDale)
+* [@cdelpone](https://github.com/cdelpone)
+* [@jamiejpace](https://github.com/jamiejpace)
+* [@mekimball](https://github.com/matthewjholmes)
 
-1. [Database Setup](./doc/db_setup.md)
-1. [User Stories](./doc/user_stories.md)
-1. [Extensions](./doc/extensions.md)
-1. [Evaluation](./doc/evaluation.md)
+Feel free to contact us!
