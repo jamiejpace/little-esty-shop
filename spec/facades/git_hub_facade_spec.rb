@@ -4,12 +4,12 @@
 #   describe 'interface methods' do
 #     let(:github) { GitHubFacade.new('little-esty-shop') }
 #
-#     # it 'has repo names and commits' do
-#     #   return_value = ['cdelpone with 38 commits', 'TannerDale with 75 commits']
-#     #   allow(GitHubService).to receive(:names_and_commits).and_return(return_value)
-#     #
-#     #   expect(github.repo_names_and_commits).to eq(return_value)
-#     # end
+#     it 'has repo names and commits' do
+#       return_value = ['cdelpone with 38 commits', 'TannerDale with 75 commits']
+#       allow(GitHubService).to receive(:names_and_commits).and_return(return_value)
+#
+#       expect(github.repo_names_and_commits).to eq(return_value)
+#     end
 #
 #     it 'has repo name' do
 #       allow(GitHubService).to receive(:repo_name).and_return('little-esty-shop')
