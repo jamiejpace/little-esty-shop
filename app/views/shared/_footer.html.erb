@@ -7,7 +7,7 @@
 
     <ul class="nav col-md-4 justify-content-end">
       <% cache :github_footer, expires_in: 2.minutes do %>
-        <% github = GitHubFacade.new('little-esty-shop') %>
+        <% github = GitHubService.new('little-esty-shop') %>
         <li>Link for repo: <%= link_to github.repo_name, 'https://github.com/TannerDale/little-esty-shop' %></li>
 
         <li class="nav-item"><p class="nav-link px-2 text-muted">Collaborators: <%= github.repo_names_and_commits.to_sentence %>, generating <%= github.pulls_count %> pull requests.</p></li>
