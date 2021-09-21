@@ -11,6 +11,11 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
+
+  # def github
+  #   @github ||= GitHubClient.new
+  # end
+
   # def curate_names(contributors)
   #   all_contributors = contributors.map do |contrib|
   #     contrib[:login]

@@ -36,7 +36,7 @@
   ### github_service_spec###
   RSpec.describe 'github api' do
     describe 'repo response' do
-      let(:repo_name) { GitHubService.repo_name }
+      let(:repo_name) { GitHubClient.repo_name }
       it 'returns data' do
         require "pry"; binding.pry
         expect(repo_name).to be_kind_of(Hash)
@@ -46,7 +46,7 @@
     end
 
     describe 'repo response' do
-      let(:github_response) { GitHubService.contributor_names }
+      let(:github_response) { GitHubClient.contributor_names }
 
       it 'returns data' do
         expect(github_response).to be_kind_of(Array)

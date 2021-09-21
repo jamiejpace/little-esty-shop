@@ -1,6 +1,5 @@
 class SessionsController < ApplicationController
-  def new
-  end
+  def new; end
 
   def create
     user = User.find_by(username: params[:username])
@@ -10,7 +9,7 @@ class SessionsController < ApplicationController
       redirect_to root_path
     else
       flash[:alert] = 'Invalid credentials'
-      redirect_to sign_up_path
+      redirect_to login_path
     end
   end
 
