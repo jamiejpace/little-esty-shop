@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 # rspec spec/features/items/show_spec.rb
 RSpec.describe 'Merchant Items' do

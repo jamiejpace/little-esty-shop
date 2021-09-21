@@ -1,5 +1,5 @@
-class WelcomeController < ApplicationController
-  def index
+# frozen_string_literal: true
 
-  end
+class WelcomeController < ApplicationController
+  def index; end
 end

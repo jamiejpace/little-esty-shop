@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'set'
 
 class GitHubClient
-  TURING_STAFF = %w(BrianZanti timomitchel scottalexandra jamisonordway)
+  TURING_STAFF = %w[BrianZanti timomitchel scottalexandra jamisonordway].freeze
   class << self
     def repo_info
       response = conn.get('/repos/tannerdale/little-esty-shop')

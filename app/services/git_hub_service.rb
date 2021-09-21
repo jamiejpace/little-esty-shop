@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class GitHubService
-  TURING_STAFF = %w(BrianZanti timomitchel scottalexandra jamisonordway)
+  TURING_STAFF = %w[BrianZanti timomitchel scottalexandra jamisonordway].freeze
 
   def initialize(repo_name)
     @repo_name = repo_name

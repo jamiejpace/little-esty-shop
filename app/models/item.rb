@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Item < ApplicationRecord
   self.primary_key = :id
 
@@ -7,7 +9,7 @@ class Item < ApplicationRecord
   has_many :invoices, through: :invoice_items
   has_many :transactions, through: :invoices
 
-  scope :by_status, ->(status) {
+  scope :by_status, lambda { |status|
     where(status: status)
   }
 

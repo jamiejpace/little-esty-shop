@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Invoice < ApplicationRecord
   self.primary_key = :id
 
@@ -9,15 +11,15 @@ class Invoice < ApplicationRecord
 
   enum status: ['in progress', 'completed', 'cancelled']
 
-  scope :pending_invoices, -> {
+  scope :pending_invoices, lambda {
     where(status: 0).order(:created_at)
   }
 
-  scope :transactions_count, -> {
+  scope :transactions_count, lambda {
     select('COUNT(transactions.id) AS transaction_count')
   }
 
-  scope :total_revenues, -> {
+  scope :total_revenues, lambda {
     select('SUM(invoice_items.unit_price * invoice_items.quantity) AS revenue')
   }
 

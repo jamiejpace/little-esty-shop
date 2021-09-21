@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 # rspec spec/features/merchants/dashboard_spec.rb
 RSpec.describe 'Merchant Dashboard Show Page' do
@@ -12,23 +14,23 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     let!(:item1) { create :item, { merchant_id: merchant1.id } }
     let!(:item2) { create :item, { merchant_id: merchant1.id } }
     let!(:item3) { create :item, { merchant_id: merchant1.id } }
-    let!(:invoice1) { create :invoice, { customer_id: customer.id} }
-    let!(:invoice2) { create :invoice, { customer_id: customer2.id, created_at: Date.today - 2} }
+    let!(:invoice1) { create :invoice, { customer_id: customer.id } }
+    let!(:invoice2) { create :invoice, { customer_id: customer2.id, created_at: Date.today - 2 } }
     let!(:invoice3) { create :invoice, { customer_id: customer2.id, created_at: Date.today } }
-    let!(:invoice4) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice5) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice6) { create :invoice, { customer_id: customer2.id} }
-    let!(:invoice7) { create :invoice, { customer_id: customer6.id} }
-    let!(:invoice8) { create :invoice, { customer_id: customer6.id} }
-    let!(:invoice9) { create :invoice, { customer_id: customer6.id} }
-    let!(:invoice10) { create :invoice, { customer_id: customer6.id} }
-    let!(:invoice11) { create :invoice, { customer_id: customer3.id} }
-    let!(:invoice12) { create :invoice, { customer_id: customer3.id} }
-    let!(:invoice13) { create :invoice, { customer_id: customer3.id} }
-    let!(:invoice14) { create :invoice, { customer_id: customer4.id} }
-    let!(:invoice15) { create :invoice, { customer_id: customer4.id} }
-    let!(:invoice16) { create :invoice, { customer_id: customer5.id} }
-    let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 1} }
+    let!(:invoice4) { create :invoice, { customer_id: customer2.id } }
+    let!(:invoice5) { create :invoice, { customer_id: customer2.id } }
+    let!(:invoice6) { create :invoice, { customer_id: customer2.id } }
+    let!(:invoice7) { create :invoice, { customer_id: customer6.id } }
+    let!(:invoice8) { create :invoice, { customer_id: customer6.id } }
+    let!(:invoice9) { create :invoice, { customer_id: customer6.id } }
+    let!(:invoice10) { create :invoice, { customer_id: customer6.id } }
+    let!(:invoice11) { create :invoice, { customer_id: customer3.id } }
+    let!(:invoice12) { create :invoice, { customer_id: customer3.id } }
+    let!(:invoice13) { create :invoice, { customer_id: customer3.id } }
+    let!(:invoice14) { create :invoice, { customer_id: customer4.id } }
+    let!(:invoice15) { create :invoice, { customer_id: customer4.id } }
+    let!(:invoice16) { create :invoice, { customer_id: customer5.id } }
+    let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 1 } }
     let!(:transaction2) { create :transaction, { invoice_id: invoice2.id, result: 0 } }
     let!(:transaction3) { create :transaction, { invoice_id: invoice3.id, result: 0 } }
     let!(:transaction4) { create :transaction, { invoice_id: invoice4.id, result: 0 } }
@@ -66,7 +68,6 @@ RSpec.describe 'Merchant Dashboard Show Page' do
     end
 
     it 'shows merchant dashboard attributes' do
-
       expect(page).to have_content(merchant1.name)
     end
 
@@ -86,9 +87,9 @@ RSpec.describe 'Merchant Dashboard Show Page' do
 
     describe 'statistics - favorite customers' do
       it 'has text' do
-        expect(page).to have_content("Top 5 customers:")
-        expect(page).to have_content("Customer Name:")
-        expect(page).to have_content("Number of Successful Transactions:")
+        expect(page).to have_content('Top 5 customers:')
+        expect(page).to have_content('Customer Name:')
+        expect(page).to have_content('Number of Successful Transactions:')
       end
 
       it 'shows names of the top five customers with successful transactions' do
@@ -113,39 +114,39 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         fav5 = "#{customer5.first_name} #{customer5.last_name}"
 
         expect(page).to have_content("Customer Name: #{customer2.first_name} #{customer2.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 5")
+        expect(page).to have_content('Number of Successful Transactions: 5')
         expect(page).to have_content("Customer Name: #{customer6.first_name} #{customer6.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 4")
+        expect(page).to have_content('Number of Successful Transactions: 4')
         expect(page).to have_content("Customer Name: #{customer3.first_name} #{customer3.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 3")
+        expect(page).to have_content('Number of Successful Transactions: 3')
         expect(page).to have_content("Customer Name: #{customer4.first_name} #{customer4.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 2")
+        expect(page).to have_content('Number of Successful Transactions: 2')
         expect(page).to have_content("Customer Name: #{customer5.first_name} #{customer5.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 1")
+        expect(page).to have_content('Number of Successful Transactions: 1')
       end
     end
 
     describe 'Items Ready to Ship' do
       it 'has text' do
-        expect(page).to have_content("Items Ready to Ship:")
-        expect(page).to have_content("Item Name:")
-        expect(page).to have_content("Created at:")
-        expect(page).to have_content("Invoice ID:")
+        expect(page).to have_content('Items Ready to Ship:')
+        expect(page).to have_content('Item Name:')
+        expect(page).to have_content('Created at:')
+        expect(page).to have_content('Invoice ID:')
       end
 
       it 'lists names of ordered items not shipped' do
         merchant = create(:merchant)
-        bestitem = double("fake_item")
+        bestitem = double('fake_item')
 
-        allow(bestitem).to receive(:name).and_return("Jasmine")
-        allow(bestitem).to receive(:invoices_created_at).and_return(Date.new 1994, 12, 27)
+        allow(bestitem).to receive(:name).and_return('Jasmine')
+        allow(bestitem).to receive(:invoices_created_at).and_return(Date.new(1994, 12, 27))
         allow(bestitem).to receive(:invoices_id).and_return(21)
         allow_any_instance_of(Merchant).to receive(:items_ready_to_ship).and_return([bestitem])
 
         visit merchant_dashboard_path(merchant)
 
-        expect(page).to have_content("Item Name: Jasmine")
-        expect(page).to have_content("Invoice ID: 21")
+        expect(page).to have_content('Item Name: Jasmine')
+        expect(page).to have_content('Invoice ID: 21')
       end
 
       it 'has links to merchant invoice show page next to each item' do

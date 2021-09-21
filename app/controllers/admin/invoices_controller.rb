@@ -1,25 +1,28 @@
-class Admin::InvoicesController < Admin::BaseController
-  before_action :current_invoice, except: :index
+# frozen_string_literal: true
 
-  def index
-    @invoices = Invoice.all
-  end
+module Admin
+  class InvoicesController < Admin::BaseController
+    before_action :current_invoice, except: :index
 
-  def show
-  end
+    def index
+      @invoices = Invoice.all
+    end
 
-  def update
-    @invoice.update(invoice_params)
-    redirect_to admin_invoice_path(@invoice)
-  end
+    def show; end
 
-  private
+    def update
+      @invoice.update(invoice_params)
+      redirect_to admin_invoice_path(@invoice)
+    end
 
-  def current_invoice
-    @invoice = Invoice.find(params[:id])
-  end
+    private
 
-  def invoice_params
-    params.require(:invoice).permit(:status)
+    def current_invoice
+      @invoice = Invoice.find(params[:id])
+    end
+
+    def invoice_params
+      params.require(:invoice).permit(:status)
+    end
   end
 end

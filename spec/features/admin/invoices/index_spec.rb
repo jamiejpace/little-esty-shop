@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Admin Invoices Index" do
+RSpec.describe 'Admin Invoices Index' do
   describe 'index page' do
     before do
       @invoice_1 = create(:invoice)
@@ -14,7 +16,7 @@ RSpec.describe "Admin Invoices Index" do
     end
 
     it 'when i visit the admin invoices index' do
-      expect(current_path). to eq(admin_invoices_path)
+      expect(current_path).to eq(admin_invoices_path)
     end
 
     it 'i see a list of all invoice ids in system' do

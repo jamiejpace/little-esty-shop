@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Customer < ApplicationRecord
   self.primary_key = :id
 
@@ -9,15 +11,15 @@ class Customer < ApplicationRecord
 
   def self.top_5_customers
     joins(:transactions)
-    .merge(Transaction.successful)
-    .group(:id)
-    .limit(5)
-    .merge(Invoice.transactions_count)
-    .order(count: :desc)
-    .full_names
+      .merge(Transaction.successful)
+      .group(:id)
+      .limit(5)
+      .merge(Invoice.transactions_count)
+      .order(count: :desc)
+      .full_names
   end
 
-  scope :full_names, -> {
+  scope :full_names, lambda {
     select("customers.first_name || ' ' || customers.last_name AS customer_name")
   }
 

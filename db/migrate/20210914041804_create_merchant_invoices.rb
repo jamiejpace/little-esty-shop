@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMerchantInvoices < ActiveRecord::Migration[5.2]
   def change
     create_table :merchant_invoices do |t|

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin Merchant Index' do
@@ -60,7 +62,7 @@ RSpec.describe 'Admin Merchant Index' do
     end
 
     it 'has a link to create a merchant' do
-      click_on "Create New Merchant"
+      click_on 'Create New Merchant'
       expect(current_path).to eq(new_admin_merchant_path)
     end
 

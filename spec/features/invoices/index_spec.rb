@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 # rspec spec/features/invoices/index_spec.rb
 RSpec.describe 'Merchant Invoices Index Page' do
@@ -12,13 +14,16 @@ RSpec.describe 'Merchant Invoices Index Page' do
       @invoice2 = create :invoice, { customer_id: @customer.id }
       @invoice3 = create :invoice, { customer_id: @customer.id }
 
-      @item1 = create :item, { merchant_id: @merchant.id, status: "enabled" }
+      @item1 = create :item, { merchant_id: @merchant.id, status: 'enabled' }
       @item2 = create :item, { merchant_id: @merchant.id }
       @item3 = create :item, { merchant_id: @merchant2.id }
 
-      @invoice_item1 = create :invoice_item, { invoice_id: @invoice1.id, item_id: @item1.id, unit_price: 50, quantity: 1 }
-      @invoice_item2 = create :invoice_item, { invoice_id: @invoice2.id, item_id: @item2.id, unit_price: 100, quantity: 1 }
-      @invoice_item3 = create :invoice_item, { invoice_id: @invoice3.id, item_id: @item3.id, unit_price: 200, quantity: 1 }
+      @invoice_item1 = create :invoice_item,
+                              { invoice_id: @invoice1.id, item_id: @item1.id, unit_price: 50, quantity: 1 }
+      @invoice_item2 = create :invoice_item,
+                              { invoice_id: @invoice2.id, item_id: @item2.id, unit_price: 100, quantity: 1 }
+      @invoice_item3 = create :invoice_item,
+                              { invoice_id: @invoice3.id, item_id: @item3.id, unit_price: 200, quantity: 1 }
 
       visit merchant_invoices_path(@merchant)
     end
@@ -36,6 +41,5 @@ RSpec.describe 'Merchant Invoices Index Page' do
 
       expect(current_path).to eq(merchant_invoice_path(@merchant, @invoice1))
     end
-
   end
 end

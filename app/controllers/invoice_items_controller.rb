@@ -1,9 +1,9 @@
+# frozen_string_literal: true
+
 class InvoiceItemsController < ApplicationController
   def update
     invoice_item = InvoiceItem.find(params[:id])
-    if invoice_item.update(invoice_item_params)
-      flash[:success] = "Successfully Updated Status"
-    end
+    flash[:success] = 'Successfully Updated Status' if invoice_item.update(invoice_item_params)
     redirect_to merchant_invoice_path(params[:merchant_id], invoice_item.invoice_id)
   end
 

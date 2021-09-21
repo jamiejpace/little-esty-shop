@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateInvoiceItems < ActiveRecord::Migration[5.2]
   def change
     create_table :invoice_items, id: false do |t|
@@ -10,6 +12,6 @@ class CreateInvoiceItems < ActiveRecord::Migration[5.2]
       t.datetime :created_at
       t.datetime :updated_at
     end
-    execute "ALTER TABLE invoice_items ADD PRIMARY KEY (id);"
+    execute 'ALTER TABLE invoice_items ADD PRIMARY KEY (id);'
   end
 end

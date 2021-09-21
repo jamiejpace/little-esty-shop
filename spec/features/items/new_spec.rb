@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 # rspec spec/features/items/new_spec.rb
 RSpec.describe 'Merchant Items Create New Page' do
@@ -17,18 +19,18 @@ RSpec.describe 'Merchant Items Create New Page' do
       end
     end
 
-      it 'redirects to merchant item index with new item disabled' do
-        fill_in "Name", with: "Best Item Ever"
-        fill_in "Description", with: "Best Description Ever"
-        fill_in "Unit price", with: 10
+    it 'redirects to merchant item index with new item disabled' do
+      fill_in 'Name', with: 'Best Item Ever'
+      fill_in 'Description', with: 'Best Description Ever'
+      fill_in 'Unit price', with: 10
 
-        click_button 'Submit'
-        @merchant.reload
+      click_button 'Submit'
+      @merchant.reload
 
-        expect(current_path).to eq(merchant_items_path(@merchant))
-        expect(Item.last.name).to eq("Best Item Ever")
-        expect(page).to have_content("Best Item Ever")
-        expect(Item.last.status).to eq('disabled')
+      expect(current_path).to eq(merchant_items_path(@merchant))
+      expect(Item.last.name).to eq('Best Item Ever')
+      expect(page).to have_content('Best Item Ever')
+      expect(Item.last.status).to eq('disabled')
     end
   end
 end
