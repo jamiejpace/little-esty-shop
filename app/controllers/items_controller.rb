@@ -1,5 +1,4 @@
 class ItemsController < ApplicationController
-
   before_action :current_merchant
   before_action :current_item, except: [:index, :new, :create]
 
