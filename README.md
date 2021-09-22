@@ -13,6 +13,9 @@
 Besty Esty is a 10 day, 4 person group project that builds a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
 ## Screenshots
 
+![besty_esty_invoice_show](https://user-images.githubusercontent.com/81711519/134426268-3bf2ee74-2b10-4249-a18b-7a1d95e7fa77.jpg)
+<img width="1912" alt="Screen Shot 2021-09-22 at 4 39 53 PM" src="https://user-images.githubusercontent.com/81711519/134426308-7dd21f0f-a80c-4a3a-bed9-b755decd1520.png">
+
 ## Benchmark Achievements
 * Designed a normalized database schema and defining model relationships.
 * Utilized advanced routing techniques including namespacing to organize and group like functionality together.
@@ -59,7 +62,7 @@ Then, run it using ruby (note: '$' is not typed).
 ## Features
 * GitHub API continuously updated to ensure accurate data.
 * Merchant dashboard and password protected admin dashboard.
-*
+
 
 ## Future Enhancements:
 * Optimize user interface
