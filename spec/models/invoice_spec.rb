@@ -38,12 +38,12 @@ RSpec.describe Invoice, type: :model do
       let!(:invoice2) { create :invoice, { customer_id: customer.id, status: 0 } }
       let!(:invoice3) { create :invoice, { customer_id: customer.id, status: 1 } }
       let!(:invoice4) { create :invoice, { customer_id: customer.id, status: 2 } }
-      let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
-      let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id } }
-      let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice2.id } }
+      let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, status: 0 } }
+      let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id, status: 1 } }
+      let!(:inv_item3) { create :invoice_item, { item_id: item3.id, invoice_id: invoice2.id, status: 2 } }
 
-      it '#pending_invoices' do
-        expect(Invoice.pending_invoices).to eq([invoice1, invoice2])
+      it '#incomplete_invoices' do
+        expect(Invoice.incomplete_invoices).to eq([invoice1])
       end
 
       it 'has a transaction count' do

@@ -11,9 +11,12 @@ class Invoice < ApplicationRecord
 
   enum status: ['in progress', 'completed', 'cancelled']
 
-  scope :pending_invoices, lambda {
-    where(status: 0).order(:created_at)
-  }
+  def self.incomplete_invoices
+    joins(:invoice_items)
+      .merge(InvoiceItem.not_shipped)
+      .order(:created_at)
+      .distinct
+  end
 
   scope :transactions_count, lambda {
     select('COUNT(transactions.id) AS transaction_count')
