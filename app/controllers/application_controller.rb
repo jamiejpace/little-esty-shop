@@ -3,6 +3,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user
+  before_action :github_api_data
 
   private
 
@@ -14,25 +15,7 @@ class ApplicationController < ActionController::Base
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
   end
 
-  # def github
-  #   @github ||= GitHubClient.new
-  # end
-
-  # def curate_names(contributors)
-  #   all_contributors = contributors.map do |contrib|
-  #     contrib[:login]
-  #   end
-  #   turing_staff = %w(BrianZanti timomitchel scottalexandra jamisonordway)
-  #   all_contributors - turing_staff
-  # end
-  #
-  # def sum_contributions(contributors)
-  #   turing_staff = %w(BrianZanti timomitchel scottalexandra jamisonordway)
-  #   commits = contributors.map do |contrib|
-  #     if !turing_staff.include?(contrib[:login])
-  #       contrib[:contributions]
-  #     end
-  #   end
-  #   commits.compact.sum
-  # end
+  def github_api_data
+    @github_api_data ||= GitHubService.new('little-esty-shop')
+  end
 end
