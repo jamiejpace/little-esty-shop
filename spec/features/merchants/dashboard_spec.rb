@@ -86,9 +86,9 @@ RSpec.describe 'Merchant Dashboard Show Page' do
 
     describe 'statistics - favorite customers' do
       it 'has text' do
-        expect(page).to have_content("Top 5 customers:")
-        expect(page).to have_content("Customer Name:")
-        expect(page).to have_content("Number of Successful Transactions:")
+        expect(page).to have_content("Top 5 Customers")
+        expect(page).to have_content("Customer Name")
+        expect(page).to have_content("Successful Transactions")
       end
 
       it 'shows names of the top five customers with successful transactions' do
@@ -112,16 +112,16 @@ RSpec.describe 'Merchant Dashboard Show Page' do
         fav4 = "#{customer4.first_name} #{customer4.last_name}"
         fav5 = "#{customer5.first_name} #{customer5.last_name}"
 
-        expect(page).to have_content("Customer Name: #{customer2.first_name} #{customer2.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 5")
-        expect(page).to have_content("Customer Name: #{customer6.first_name} #{customer6.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 4")
-        expect(page).to have_content("Customer Name: #{customer3.first_name} #{customer3.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 3")
-        expect(page).to have_content("Customer Name: #{customer4.first_name} #{customer4.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 2")
-        expect(page).to have_content("Customer Name: #{customer5.first_name} #{customer5.last_name}")
-        expect(page).to have_content("Number of Successful Transactions: 1")
+        expect(page).to have_content("#{customer2.first_name} #{customer2.last_name}")
+        expect(page).to have_content(5)
+        expect(page).to have_content("#{customer6.first_name} #{customer6.last_name}")
+        expect(page).to have_content(4)
+        expect(page).to have_content("#{customer3.first_name} #{customer3.last_name}")
+        expect(page).to have_content(3)
+        expect(page).to have_content("#{customer4.first_name} #{customer4.last_name}")
+        expect(page).to have_content(2)
+        expect(page).to have_content("#{customer5.first_name} #{customer5.last_name}")
+        expect(page).to have_content(1)
       end
     end
 

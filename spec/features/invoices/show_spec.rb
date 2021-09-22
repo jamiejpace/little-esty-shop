@@ -44,7 +44,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
         within "#inv_item-#{@invoice_item1.id}" do
           expect(find_field('invoice_item_status').value).to eq('pending')
           select 'packaged'
-          click_on 'Update Invoice Item'
+          click_on 'Update'
         end
         expect(current_path).to eq(merchant_invoice_path(@merchant, @invoice1))
 
