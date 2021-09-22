@@ -1,34 +1,55 @@
+<%= render partial: 'shared/merchant_navtabs'  %>
 <h1>Merchant Items</h1>
 
 <p><%= link_to "Create Item", new_merchant_item_path(@merchant) %></p>
-
+<h5>Top 5 Most Popular Items</h5>
 <div id="most_popular">
-  <h5>Top 5 Most Popular Items</h5>
-  <% @merchant.top_five_items.each do |item| %>
-  <span id="item-<%= item.id %>">
-    <p><%= link_to item.name, merchant_item_path(@merchant, item) %></p>
-    <p>Total Revenue Generated: <%= number_to_currency(item.revenue / 100) %></p>
-    <p><%= "Top selling date for #{item.name} was #{item.date.strftime("%A, %B %e, %Y")}" %></p><br>
-  </span>
-  <% end %>
-</div>
-
-<div id="enabled">
-  <h5>Enabled</h5>
-  <% @items.by_status('enabled').each do |item| %>
-    <%= link_to item.name, merchant_item_path(@merchant, item) %>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Total Revenue</th>
+      <th scope="col">Top Selling Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @merchant.top_five_items.each_with_index do |item, i| %>
     <span id="item-<%= item.id %>">
-      <%= button_to "Disable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'disabled', name: item.name } } %>
+    <tr>
+      <th scope="row"><%= i + 1 %></th>
+      <td><%= link_to item.name, merchant_item_path(@merchant, item) %></td>
+      <td><%= number_to_currency(item.revenue.fdiv(100)) %></td>
+      <td><%= item.date.strftime("%A, %B %e, %Y") %></td>
+    </tr>
     </span>
-  <% end %>
+    <% end %>
+  </tbody>
+</table>
 </div>
-
-<div id="disabled">
-  <h5>Disabled</h5>
-  <% @items.by_status('disabled').each do |item| %>
-    <%= link_to item.name, merchant_item_path(@merchant, item) %>
-    <span id="item-<%= item.id %>">
-      <%= button_to "Enable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'enabled', name: item.name } } %>
-    </span>
-  <% end %>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <div id="enabled">
+      <h5>Enabled</h5>
+        <% @items.by_status('enabled').each do |item| %>
+          <%= link_to item.name, merchant_item_path(@merchant, item) %>
+          <span id="item-<%= item.id %>">
+            <%= button_to "Disable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'disabled', name: item.name } } %>
+          </span>
+        <% end %><br>
+      </div>
+    </div>
+    <div class="col">
+      <div id="disabled">
+      <h5>Disabled</h5>
+        <% @items.by_status('disabled').each do |item| %>
+          <%= link_to item.name, merchant_item_path(@merchant, item) %>
+          <span id="item-<%= item.id %>">
+            <%= button_to "Enable #{item.name}", merchant_item_path(@merchant, item), method: :patch, params: { item: { status: 'enabled', name: item.name } } %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
