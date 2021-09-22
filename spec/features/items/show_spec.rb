@@ -12,7 +12,7 @@ RSpec.describe 'Merchant Items' do
     it 'lists item attributes' do
       expect(page).to have_content(@item1.name)
       expect(page).to have_content(@item1.description)
-      expect(page).to have_content(@item1.unit_price)
+      expect(page).to have_content(@item1.unit_price.fdiv(100))
       expect(page).to have_no_content(@item3.name)
     end
 
