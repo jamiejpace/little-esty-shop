@@ -1,18 +1,53 @@
 <h1>Admin Dashboard</h1>
 
 <div id='links'>
-  <%= link_to 'Admin Merchants', admin_merchants_path %>
-  <%= link_to 'Admin Invoices', admin_invoices_path %>
+<ul class="nav">
+  <li class="nav-item">
+    <%= link_to 'Admin Merchants', admin_merchants_path, class: 'nav-link active' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to 'Admin Invoices', admin_invoices_path, class: 'nav-link active' %>
+  </li>
+</ul>
 </div>
 
 <div id='statistics'>
-  <% @top_customers.each do |cust| %>
-    <%=  "#{cust.customer_name}: #{cust.transaction_count}" %>
-  <% end %>
+  <table class="table table table-bordered border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Transaction Count</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @top_customers.each_with_index do |cust, i| %>
+        <tr>
+          <th scope="row"><%= i + 1 %></th>
+          <td><%= cust.customer_name %></td>
+          <td><%= cust.transaction_count %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
-
-<div id="pending-invoices">
-  <% @pending_invoices.each do |invoice| %>
-    <p>Invoice <%= link_to invoice.id, admin_invoice_path(invoice) %>, Created at: <%= invoice.created_at.strftime("%A, %B %e, %Y") %></p>
-  <% end %>
+<br/>
+<div id="incomplete-invoices">
+<h3>Incomplete Invoices</h3>
+  <table class="table table table-bordered border-dark">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">Invoice #</th>
+        <th scope="col">Created At</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @incomplete_invoices.each do |invoice, i| %>
+        <tr>
+          <th scope="row"><%= link_to invoice.id, admin_invoice_path(invoice), class: 'link link-dark' %></th>
+          <td><%= invoice.created_at.strftime("%A, %B %e, %Y") %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 </div>
