@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # require 'rails_helper'
 #
 # RSpec.describe 'GitHubService', type: :helper do
@@ -28,43 +29,43 @@
 #       expect(github.pulls_count).to eq(2)
 #     end
 #   end
-  # describe 'helper methods' do
-  #   let(:turing_staff) { %w(BrianZanti timomitchel scottalexandra jamisonordway) }
-  #   it 'returns contributors names' do
-  #     return_value = [
-  #       {
-  #         author: {login: 'cdelpone'},
-  #         total: 38
-  #       },
-  #       {
-  #         author: {login: 'tannerdale'},
-  #         total: 75
-  #       },
-  #       {
-  #         author: {login: 'jamisonordway'},
-  #         total: 2
-  #       }
-  #     ]
-  #     expected = {
-  #       'cdelpone' => 38,
-  #       'tannerdale' => 75
-  #     }
-  #     allow(GitHubClient).to receive(:contribution_stats).and_return(return_value)
+# describe 'helper methods' do
+#   let(:turing_staff) { %w(BrianZanti timomitchel scottalexandra jamisonordway) }
+#   it 'returns contributors names' do
+#     return_value = [
+#       {
+#         author: {login: 'cdelpone'},
+#         total: 38
+#       },
+#       {
+#         author: {login: 'tannerdale'},
+#         total: 75
+#       },
+#       {
+#         author: {login: 'jamisonordway'},
+#         total: 2
+#       }
+#     ]
+#     expected = {
+#       'cdelpone' => 38,
+#       'tannerdale' => 75
+#     }
+#     allow(GitHubClient).to receive(:contribution_stats).and_return(return_value)
 
-  #     expect(GitHubClient.commits_by_contributor).to eq(expected)
-  #   end
+#     expect(GitHubClient.commits_by_contributor).to eq(expected)
+#   end
 
-  #   it 'returns contributors names and commits' do
-  #     return_value = {
-  #       'cdelpone' => 38,
-  #       'tannerdale' => 75
-  #     }
+#   it 'returns contributors names and commits' do
+#     return_value = {
+#       'cdelpone' => 38,
+#       'tannerdale' => 75
+#     }
 
-  #     expected = ["cdelpone with 38 commits", "tannerdale with 75 commits"]
+#     expected = ["cdelpone with 38 commits", "tannerdale with 75 commits"]
 
-  #     allow(GitHubClient).to receive(:commits_by_contributor).and_return(return_value)
+#     allow(GitHubClient).to receive(:commits_by_contributor).and_return(return_value)
 
-  #     expect(GitHubClient.names_and_commits).to eq(expected)
-  #   end
-  # end
+#     expect(GitHubClient.names_and_commits).to eq(expected)
+#   end
+# end
 # end

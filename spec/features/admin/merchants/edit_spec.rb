@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin Merchant edit' do
@@ -23,12 +25,11 @@ RSpec.describe 'Admin Merchant edit' do
 
   it 'rejects empty name' do
     within '#form' do
-      fill_in 'Name', with: ""
+      fill_in 'Name', with: ''
       click_button 'Submit'
     end
 
     expect(page).to have_content('Invalid name, fool')
     expect(current_path).to eq(edit_admin_merchant_path(@merchant))
   end
-
 end

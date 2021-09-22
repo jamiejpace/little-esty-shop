@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin Invoice Show Page' do
@@ -25,7 +27,7 @@ RSpec.describe 'Admin Invoice Show Page' do
     it 'has invoice id, status, created, cust first and last' do
       expect(page).to have_content(@invoice.id.to_s)
       expect(page).to have_content(@invoice.status.to_s)
-      expect(page).to have_content(@invoice.created_at.strftime("%A, %B %e, %Y"))
+      expect(page).to have_content(@invoice.created_at.strftime('%A, %B %e, %Y'))
       expect(page).to have_content(@invoice.customer.first_name)
       expect(page).to have_content(@invoice.customer.last_name)
     end
@@ -51,7 +53,9 @@ RSpec.describe 'Admin Invoice Show Page' do
     let!(:merchant) { create :merchant }
     let!(:invoice) { create :invoice, { customer_id: customer.id } }
     let!(:item) { create :item, { merchant_id: merchant.id } }
-    let!(:invoice_item) { create :invoice_item, { invoice_id: invoice.id, item_id: item.id, unit_price: 13000, quantity: 1 } }
+    let!(:invoice_item) do
+      create :invoice_item, { invoice_id: invoice.id, item_id: item.id, unit_price: 13_000, quantity: 1 }
+    end
 
     it 'shows the total revenue' do
       visit admin_invoice_path(invoice)
@@ -62,7 +66,7 @@ RSpec.describe 'Admin Invoice Show Page' do
     end
 
     it 'has button to update the status' do
-      select "cancelled", from: "invoice_status"
+      select 'cancelled', from: 'invoice_status'
       click_button 'Update Status'
 
       expect(find_field('invoice_status').value).to eq('cancelled')

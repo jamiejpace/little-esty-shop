@@ -1,6 +1,7 @@
+<%= render partial: 'shared/merchant_navtabs'  %>
 <h1><%= @item.name %></h1>
 
 <p>Description: <%= @item.description %></p>
-<p>Current Selling Price: <%= @item.unit_price %></p>
+<p>Current Selling Price: <%= number_to_currency(@item.unit_price.fdiv(100)) %></p>
 
 <%= link_to 'Update', edit_merchant_item_path(@merchant, @item) %>

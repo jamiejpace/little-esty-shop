@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin Merchant Show' do
@@ -11,7 +13,7 @@ RSpec.describe 'Admin Merchant Show' do
   end
 
   it 'has a button to update the merchant' do
-    click_on "Edit Merchant"
+    click_on 'Edit Merchant'
 
     expect(current_path).to eq(edit_admin_merchant_path(@merchant))
   end

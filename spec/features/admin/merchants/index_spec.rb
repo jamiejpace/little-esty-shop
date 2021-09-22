@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe 'Admin Merchant Index' do
@@ -29,7 +31,7 @@ RSpec.describe 'Admin Merchant Index' do
     it 'changes button dynamically when enable/disabled clicked' do
       within "#merch-#{@merchant_1.id}" do
         expect(page).not_to have_button "Disable #{@merchant_1.name}"
-        click_button "Enable #{@merchant_1.name}"
+        click_button "Enable"
       end
 
       expect(current_path).to eq(admin_merchants_path)
@@ -39,7 +41,7 @@ RSpec.describe 'Admin Merchant Index' do
 
       within "#merch-#{@merchant_1.id}" do
         expect(page).not_to have_button "Enable #{@merchant_1.name}"
-        click_button "Disable #{@merchant_1.name}"
+        click_button "Disable"
       end
       expect(current_path).to eq(admin_merchants_path)
 
@@ -60,7 +62,7 @@ RSpec.describe 'Admin Merchant Index' do
     end
 
     it 'has a link to create a merchant' do
-      click_on "Create New Merchant"
+      click_on 'Create New Merchant'
       expect(current_path).to eq(new_admin_merchant_path)
     end
 

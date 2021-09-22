@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Transaction, type: :model do
   describe 'relationships' do
-    let(:results) { ['success', 'failed'] }
+    let(:results) { %w[success failed] }
     let!(:transaction) { create :transaction, { result: 0 } }
 
-    it { should belong_to :invoice}
+    it { should belong_to :invoice }
 
     it 'has the right index' do
       results.each_with_index do |item, index|

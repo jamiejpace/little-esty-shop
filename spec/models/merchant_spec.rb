@@ -1,23 +1,24 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 # rspec spec/models/merchant_spec.rb
 RSpec.describe Merchant, type: :model do
   describe 'relationships/validations' do
-
     it { should have_many :items }
     it { should validate_presence_of :name }
 
     it 'validates default disabled status' do
       merchant = create(:merchant)
-      expect(merchant.status).to eq("disabled")
+      expect(merchant.status).to eq('disabled')
     end
   end
 
   describe 'class methods/scopes' do
     describe 'by status' do
       before :each do
-        @merch1 = create :merchant, { status: 'enabled'}
+        @merch1 = create :merchant, { status: 'enabled' }
         @merch2 = create :merchant
-        @merch3 = create :merchant, { status: 'enabled'}
+        @merch3 = create :merchant, { status: 'enabled' }
         @merch4 = create :merchant
       end
 
@@ -66,25 +67,47 @@ RSpec.describe Merchant, type: :model do
     let!(:transaction3) { create :transaction, { invoice_id: invoice2.id, result: 0 } }
     let!(:transaction4) { create :transaction, { invoice_id: invoice3.id, result: 1 } }
 
-    let!(:inv_item1) { create :invoice_item, { invoice_id: invoice1.id, item_id: item1.id, unit_price: 50, quantity: 1 } } # 1, 50
+    # 1, 50
+    let!(:inv_item1) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item1.id, unit_price: 50, quantity: 1 }
+    end
+    # 2, 300 600
+    let!(:inv_item2) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 }
+    end
+    let!(:inv_item3) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item3.id, unit_price: 200, quantity: 1 }
+    end
 
-    let!(:inv_item2) { create :invoice_item, { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 } } # 2, 300 600
-    let!(:inv_item3) { create :invoice_item, { invoice_id: invoice2.id, item_id: item3.id, unit_price: 200, quantity: 1 } }
+    # 3, 100 150
+    let!(:inv_item4) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item4.id, unit_price: 100, quantity: 1 }
+    end
+    let!(:inv_item5) do
+      create :invoice_item, { invoice_id: invoice3.id, item_id: item5.id, unit_price: 100, quantity: 1 }
+    end
 
-    let!(:inv_item4) { create :invoice_item, { invoice_id: invoice2.id, item_id: item4.id, unit_price: 100, quantity: 1 } } # 3, 100 150
-    let!(:inv_item5) { create :invoice_item, { invoice_id: invoice3.id, item_id: item5.id, unit_price: 100, quantity: 1 } }
+    # 4, 600 # 1200
+    let!(:inv_item6) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item6.id, unit_price: 300, quantity: 1 }
+    end
+    let!(:inv_item7) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item7.id, unit_price: 300, quantity: 1 }
+    end
 
-    let!(:inv_item6) { create :invoice_item, { invoice_id: invoice2.id, item_id: item6.id, unit_price: 300, quantity: 1 } } # 4, 600 # 1200
-    let!(:inv_item7) { create :invoice_item, { invoice_id: invoice1.id, item_id: item7.id, unit_price: 300, quantity: 1 } }
+    # 5, 500 700
+    let!(:inv_item8) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item8.id, unit_price: 200, quantity: 1 }
+    end
+    let!(:inv_item9) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 300, quantity: 1 }
+    end
 
-    let!(:inv_item8) { create :invoice_item, { invoice_id: invoice2.id, item_id: item8.id, unit_price: 200, quantity: 1 } } # 5, 500 700
-    let!(:inv_item9) { create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 300, quantity: 1 } }
-
-    let!(:inv_item10) { create :invoice_item, { invoice_id: invoice1.id, item_id: item10.id, unit_price: 150, quantity: 1 } } # 6, 150 200
-
-
+    # 6, 150 200
+    let!(:inv_item10) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item10.id, unit_price: 150, quantity: 1 }
+    end
     it 'has the top 5 merchants name, total, day' do
-
       expected = [
         [merch4.name, 600, DateTime.new(2021, 7, 1)],
         [merch5.name, 500, DateTime.new(2021, 7, 1)],
@@ -117,7 +140,7 @@ RSpec.describe Merchant, type: :model do
 
     let!(:customer) { create :customer }
 
-    let!(:invoice1) { create :invoice, { customer_id: customer.id, created_at: Date.today - 1} }
+    let!(:invoice1) { create :invoice, { customer_id: customer.id, created_at: Date.today - 1 } }
     let!(:invoice2) { create :invoice, { customer_id: customer.id, created_at: Date.today } }
     let!(:invoice3) { create :invoice, { customer_id: customer.id, created_at: Date.today } }
 
@@ -126,22 +149,41 @@ RSpec.describe Merchant, type: :model do
     let!(:transaction3) { create :transaction, { invoice_id: invoice2.id, result: 0 } }
     let!(:transaction4) { create :transaction, { invoice_id: invoice3.id, result: 1 } }
 
-    let!(:inv_item1) { create :invoice_item, { invoice_id: invoice1.id, item_id: item1.id, unit_price: 50, quantity: 1 } }
+    let!(:inv_item1) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item1.id, unit_price: 50, quantity: 1 }
+    end
 
-    let!(:inv_item2) { create :invoice_item, { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 } }
-    let!(:inv_item3) { create :invoice_item, { invoice_id: invoice2.id, item_id: item3.id, unit_price: 200, quantity: 1 } }
+    let!(:inv_item2) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 }
+    end
+    let!(:inv_item3) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item3.id, unit_price: 200, quantity: 1 }
+    end
 
-    let!(:inv_item4) { create :invoice_item, { invoice_id: invoice2.id, item_id: item4.id, unit_price: 100, quantity: 1 } }
-    let!(:inv_item5) { create :invoice_item, { invoice_id: invoice3.id, item_id: item5.id, unit_price: 100, quantity: 1 } }
+    let!(:inv_item4) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item4.id, unit_price: 100, quantity: 1 }
+    end
+    let!(:inv_item5) do
+      create :invoice_item, { invoice_id: invoice3.id, item_id: item5.id, unit_price: 100, quantity: 1 }
+    end
 
-    let!(:inv_item6) { create :invoice_item, { invoice_id: invoice2.id, item_id: item6.id, unit_price: 1000, quantity: 1 } }
-    let!(:inv_item7) { create :invoice_item, { invoice_id: invoice2.id, item_id: item7.id, unit_price: 900, quantity: 1 } }
+    let!(:inv_item6) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item6.id, unit_price: 1000, quantity: 1 }
+    end
+    let!(:inv_item7) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item7.id, unit_price: 900, quantity: 1 }
+    end
 
-    let!(:inv_item8) { create :invoice_item, { invoice_id: invoice2.id, item_id: item8.id, unit_price: 800, quantity: 1 } }
-    let!(:inv_item9) { create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 700, quantity: 1 } }
+    let!(:inv_item8) do
+      create :invoice_item, { invoice_id: invoice2.id, item_id: item8.id, unit_price: 800, quantity: 1 }
+    end
+    let!(:inv_item9) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item9.id, unit_price: 700, quantity: 1 }
+    end
 
-    let!(:inv_item10) { create :invoice_item, { invoice_id: invoice1.id, item_id: item10.id, unit_price: 600, quantity: 1 } }
-
+    let!(:inv_item10) do
+      create :invoice_item, { invoice_id: invoice1.id, item_id: item10.id, unit_price: 600, quantity: 1 }
+    end
 
     it 'has the top 5 items name and revenue' do
       expected = [
@@ -169,10 +211,10 @@ RSpec.describe Merchant, type: :model do
     let!(:item1) { create :item, { merchant_id: merchant.id } }
     let!(:item2) { create :item, { merchant_id: merchant.id } }
     let!(:item3) { create :item, { merchant_id: merchant.id } }
-    let!(:invoice1) { create :invoice, { customer_id: customer.id} }
-    let!(:invoice2) { create :invoice, { customer_id: customer2.id} }
+    let!(:invoice1) { create :invoice, { customer_id: customer.id } }
+    let!(:invoice2) { create :invoice, { customer_id: customer2.id } }
     let!(:invoice3) { create :invoice, { customer_id: customer3.id } }
-    let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 1} }
+    let!(:transaction1) { create :transaction, { invoice_id: invoice1.id, result: 1 } }
     let!(:transaction2) { create :transaction, { invoice_id: invoice2.id, result: 0 } }
     let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id } }
     let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id } }
@@ -189,20 +231,19 @@ RSpec.describe Merchant, type: :model do
     it '#ordered_invoices' do
       expect(merchant.ordered_invoices).to eq([invoice1, invoice2])
     end
-
   end
 
   describe 'items ready to ship' do
-    let(:status){['pending','packaged','shipped']}
+    let(:status) { %w[pending packaged shipped] }
     let!(:merchant1) { create(:merchant) }
     let!(:merchant2) { create(:merchant) }
     let!(:customer) { create :customer }
     let!(:item1) { create :item, { merchant_id: merchant1.id } }
     let!(:item2) { create :item, { merchant_id: merchant1.id } }
     let!(:item3) { create :item, { merchant_id: merchant1.id } }
-    let!(:item4) { create :item, { merchant_id: merchant1.id, status: "enabled"} }
+    let!(:item4) { create :item, { merchant_id: merchant1.id, status: 'enabled' } }
     let!(:item5) { create :item, { merchant_id: merchant2.id } }
-    let!(:invoice1) { create :invoice, { customer_id: customer.id} }
+    let!(:invoice1) { create :invoice, { customer_id: customer.id } }
     let!(:inv_item1) { create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, status: 1 } }
     let!(:inv_item2) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id, status: 2 } }
     let!(:inv_item3) { create :invoice_item, { item_id: item2.id, invoice_id: invoice1.id, status: 0 } }

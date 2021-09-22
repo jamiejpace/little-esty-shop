@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateCustomers < ActiveRecord::Migration[5.2]
   def change
     create_table :customers, id: false do |t|
@@ -7,6 +9,6 @@ class CreateCustomers < ActiveRecord::Migration[5.2]
       t.datetime :created_at
       t.datetime :updated_at
     end
-    execute "ALTER TABLE customers ADD PRIMARY KEY (id);"
+    execute 'ALTER TABLE customers ADD PRIMARY KEY (id);'
   end
 end

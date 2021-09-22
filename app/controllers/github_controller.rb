@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class GithubController < ApplicationController
-  # 
+  #
   # def set_github_info
   #   repo_response = Faraday.get('https://api.github.com/repos/TannerDale/little-esty-shop')
   #   @repository = JSON.parse(repo_response.body, symbolize_names: true)[:name]
@@ -27,5 +29,4 @@ class GithubController < ApplicationController
   #   end
   #   commits.compact.sum
   # end
-
 end
