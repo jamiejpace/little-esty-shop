@@ -1,6 +1,9 @@
 <h1>Admin Merchants</h1>
 
 <%= link_to "Create New Merchant", new_admin_merchant_path %>
+<br/>
+<br/>
+<h2>Top Merchants</h2>
 <div id="top-merchants">
 <table class="table table-bordered border-dark">
   <thead class="table-dark">
@@ -36,7 +39,7 @@
       <span id="merch-<%= merch.id %>">
         <tr>
         <td><%= link_to merch.name, admin_merchant_path(merch) %></td>
-        <td><%= button_to "Disable", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'disabled', name: merch.name } }, class: 'btn btn-outline-danger btn-sm' %></td>
+        <td><%= button_to "Disable", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'disabled' } }, class: 'btn btn-outline-danger btn-sm' %></td>
         </tr>
       </span>
       <% end %>
@@ -51,7 +54,7 @@
       <span id="merch-<%= merch.id %>">
       <tr>
         <td><%= link_to merch.name, admin_merchant_path(merch) %></td>
-        <td><%= button_to "Enable", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'enabled', name: merch.name } }, class: 'btn btn-outline-success btn-sm' %></td>
+        <td><%= button_to "Enable", admin_merchant_path(merch), method: :patch, params: { merchant: { status: 'enabled' } }, class: 'btn btn-outline-success btn-sm' %></td>
       </tr>
       </span>
       <% end %>
