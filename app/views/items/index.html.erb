@@ -19,7 +19,7 @@
     <tr>
       <th scope="row"><%= i + 1 %></th>
       <td><%= link_to item.name, merchant_item_path(@merchant, item) %></td>
-      <td><%= number_to_currency(item.revenue / 100) %></td>
+      <td><%= number_to_currency(item.revenue.fdiv(100)) %></td>
       <td><%= item.date.strftime("%A, %B %e, %Y") %></td>
     </tr>
     </span>
