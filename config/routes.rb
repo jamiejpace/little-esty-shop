@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :items, except: [:delete]
     resources :invoices, only: %i[index show]
     resources :invoice_items, only: [:update]
-    resources :bulk_discounts, only: [:index, :show]
+    resources :bulk_discounts, except: :delete
   end
 
   namespace :admin do
