@@ -120,4 +120,9 @@ RSpec.configure do |config|
   # stub_request(:get, "https://api.github.com/repos/tannerdale/little-esty-shop")
   # .to_return(body: github_response.to_json)
   # end
+  config.before(:each) do
+  json_response = File.read('spec/fixtures/next_holidays.json')
+  stub_request(:get, "https://date.nager.at/api/v2/NextPublicHolidays/US")
+    .to_return(status: 200, body: json_response)
+  end
 end

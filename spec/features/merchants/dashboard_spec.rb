@@ -83,6 +83,12 @@ RSpec.describe 'Merchant Dashboard Show Page' do
 
         expect(current_path).to eq(merchant_invoices_path(merchant1))
       end
+
+      it 'has a link to bulk discounts' do
+        click_on 'Bulk Discounts'
+
+        expect(current_path).to eq(merchant_bulk_discounts_path(merchant1))
+      end
     end
 
     describe 'statistics - favorite customers' do
