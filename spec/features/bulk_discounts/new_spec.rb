@@ -15,15 +15,17 @@ RSpec.describe 'bulk discount new page' do
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
     expect(page).to_not have_content("Discount Percentage: 20")
 
+    fill_in 'Name', with: 'The Big Discount'
     fill_in 'Percentage discount', with: '20'
     fill_in 'Quantity threshold', with: '20'
 
     click_button 'Submit'
 
     @merchant1.reload
-    save_and_open_page
+    
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
     expect(page).to have_content("Discount Percentage: 20")
+    expect(page).to have_content("The Big Discount")
     expect(page).to have_content(BulkDiscount.last.quantity_threshold)
     expect(page).to have_content("Successfully Created Discount")
   end
