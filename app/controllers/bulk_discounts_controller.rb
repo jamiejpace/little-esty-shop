@@ -5,5 +5,6 @@ class BulkDiscountsController < ApplicationController
 
   def index
     @bulk_discounts = BulkDiscount.all
+    @holidays = BulkDiscountFacade.holidays
   end
 end
