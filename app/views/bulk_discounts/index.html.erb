@@ -4,3 +4,8 @@
   <p>Discount Percentage: <%= disc.percentage_discount %>%</p>
   <p>Discount Threshold: <%= disc.quantity_threshold %></p>
 <% end %>
+
+<h3>Upcoming Holidays</h3>
+<% @holidays.each do |holiday| %>
+  <p><%= holiday.name %></p>
+<% end %>
