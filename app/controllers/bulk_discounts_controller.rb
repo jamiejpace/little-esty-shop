@@ -7,4 +7,8 @@ class BulkDiscountsController < ApplicationController
     @bulk_discounts = BulkDiscount.all
     @holidays = BulkDiscountFacade.holidays
   end
+
+  def new
+
+  end
 end
