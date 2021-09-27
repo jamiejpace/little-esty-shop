@@ -88,4 +88,44 @@ RSpec.describe Invoice, type: :model do
       end
     end
   end
+
+  describe '.discount_revenue' do
+    # before :each do
+    #   @merchant = create :merchant
+    #   @merchant2 = create :merchant
+    #
+    #   @bulk_discount1 = @merchant.bulk_discounts.create!(name: "Discount A", percentage_discount: 20, quantity_threshold: 20)
+    #   @bulk_discount2 = @merchant.bulk_discounts.create!(name: "Discount B", percentage_discount: 10, quantity_threshold: 10)
+    #
+    #   @customer = create :customer
+    #
+    #   @invoice1 = create :invoice, { customer_id: @customer.id, created_at: DateTime.new(2021, 9, 18) }
+    #   @invoice2 = create :invoice, { customer_id: @customer.id, created_at: DateTime.new(2021, 9, 17) }
+    #
+    #   @item1 = create :item, { merchant_id: @merchant.id, status: 'enabled' }
+    #   @item2 = create :item, { merchant_id: @merchant.id }
+    #   @item3 = create :item, { merchant_id: @merchant2.id }
+    #
+    #   @invoice_item1 = create :invoice_item,
+    #                           { invoice_id: @invoice1.id, item_id: @item1.id, unit_price: 50, quantity: 1, status: 0 }
+    #   @invoice_item2 = create :invoice_item,
+    #                           { invoice_id: @invoice1.id, item_id: @item2.id, unit_price: 100, quantity: 1, status: 1 }
+    #   @invoice_item3 = create :invoice_item,
+    #                           { invoice_id: @invoice2.id, item_id: @item3.id, unit_price: 200, quantity: 1, status: 2 }
+    # end
+
+    it 'calculates discounted revenue' do
+      customer = Customer.create(first_name: "Mose", last_name: "Odell", id: 1)
+      merchant_a = Merchant.create(name: "The Gift Shop", id: 1)
+      bulk_disoucnt_a = merchant_a.bulk_discounts.create!(name: "Discount A", percentage_discount: 20, quantity_threshold: 10)
+      invoice_a = Invoice.create!(customer_id: customer.id, status: 1, id: 1)
+      item_a = Item.create!(name: "Hat", description: "Good hat", unit_price: 2000, merchant_id: merchant_a.id, status: "enabled", id: 1)
+      item_b = Item.create!(name: "Pants", description: "Good pants", unit_price: 3000, merchant_id: merchant_a.id, status: "enabled", id: 2)
+      InvoiceItem.create!(item_id: item_a.id, invoice_id: invoice_a.id, quantity: 5, unit_price: 2000, status: 2, id: 1)
+      InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 5, unit_price: 3000, status: 2, id: 2)
+
+      expect(invoice_a.total_revenue).to eq(25000)
+      expect(invoice_a.discount_revenue).to eq(25000)
+    end
+  end
 end
