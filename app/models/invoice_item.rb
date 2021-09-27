@@ -19,4 +19,19 @@ class InvoiceItem < ApplicationRecord
   scope :revenue, lambda {
     sum('unit_price * quantity')
   }
+
+  def revenue
+    unit_price * quantity
+  end
+
+  def highest_discount
+    bulk_discounts.where('bulk_discounts.quantity_threshold <= ?', quantity)
+                  .select('bulk_discounts.*')
+                  .order(percentage_discount: :desc)
+                  .first
+  end
+
+  def revenue_after_discount
+    revenue * (1 - (highest_discount.percentage_discount.to_f / 100) )
+  end
 end

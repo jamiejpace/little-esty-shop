@@ -58,12 +58,4 @@ class Merchant < ApplicationRecord
       .group(:id)
       .order(revenue: :desc).limit(5)
   end
-
-  def total_bulk_discount
-    #all_discounts = [20, 30, 40]
-    #counter = 0 - tracking discount amount
-    #find merchants bulk discounts (sort by highest quantity threshold descending) interate through them
-      #find all invoice_items where greater than equal to threshold
-      #sum revenue from all the invoice_items, multiply by discount percent, add to counter
-  end
 end
