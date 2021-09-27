@@ -29,4 +29,8 @@ class Invoice < ApplicationRecord
   def total_revenue
     invoice_items.revenue
   end
+
+  def discount_revenue
+    invoice_items.joins(:bulk_discounts)
+  end
 end
