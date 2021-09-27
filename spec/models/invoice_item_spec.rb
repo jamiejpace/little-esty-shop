@@ -49,4 +49,34 @@ RSpec.describe InvoiceItem, type: :model do
       expect(InvoiceItem.revenue).to eq(450)
     end
   end
+
+  describe 'instance methods' do
+    it '.highest_discount' do
+      customer = Customer.create(first_name: "Mose", last_name: "Odell", id: 1)
+      merchant_a = Merchant.create(name: "The Gift Shop", id: 1)
+      bulk_discount_a = merchant_a.bulk_discounts.create!(name: "Discount A", percentage_discount: 20, quantity_threshold: 10)
+      bulk_discount_b = merchant_a.bulk_discounts.create!(name: "Discount B", percentage_discount: 30, quantity_threshold: 15)
+      invoice_a = Invoice.create!(customer_id: customer.id, status: 1, id: 1)
+      item_a = Item.create!(name: "Hat", description: "Good hat", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 1)
+      item_b = Item.create!(name: "Pants", description: "Good pants", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 2)
+      invoice_item_1 = InvoiceItem.create!(item_id: item_a.id, invoice_id: invoice_a.id, quantity: 12, unit_price: 100, status: 2, id: 1)
+      invoice_item_2 = InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 2)
+
+      expect(invoice_item_1.highest_discount).to eq(bulk_discount_a)
+    end
+
+    it '.revenue_after_discount' do
+      customer = Customer.create(first_name: "Mose", last_name: "Odell", id: 1)
+      merchant_a = Merchant.create(name: "The Gift Shop", id: 1)
+      bulk_discount_a = merchant_a.bulk_discounts.create!(name: "Discount A", percentage_discount: 20, quantity_threshold: 10)
+      bulk_discount_b = merchant_a.bulk_discounts.create!(name: "Discount B", percentage_discount: 30, quantity_threshold: 15)
+      invoice_a = Invoice.create!(customer_id: customer.id, status: 1, id: 1)
+      item_a = Item.create!(name: "Hat", description: "Good hat", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 1)
+      item_b = Item.create!(name: "Pants", description: "Good pants", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 2)
+      invoice_item_1 = InvoiceItem.create!(item_id: item_a.id, invoice_id: invoice_a.id, quantity: 12, unit_price: 100, status: 2, id: 1)
+      invoice_item_2 = InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 2)
+
+      expect(invoice_item_1.revenue_after_discount).to eq(960)
+    end
+  end
 end
