@@ -18,4 +18,5 @@ RSpec.describe 'bulk discount show page' do
 
     expect(current_path).to eq(edit_merchant_bulk_discount_path(@merchant1, @discount1))
   end
+  
 end

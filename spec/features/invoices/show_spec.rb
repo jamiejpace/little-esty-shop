@@ -35,8 +35,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
       expect(page).to have_content(@invoice1.status)
       expect(page).to have_content('Saturday, September 18, 2021')
       expect(page).to have_content(@invoice1.customer.full_name)
-      expect(page).to have_content(@invoice1.total_revenue)
-      expect(page).to have_content('$150.00')
+      expect(page).to have_content('$1.50')
     end
 
     context 'Merchant Invoice Show Page - Invoice Item Information' do
@@ -75,13 +74,33 @@ RSpec.describe 'Merchant Invoice Show Page' do
       item_a1 = Item.create!(name: "Hat", description: "Good hat", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 1)
       item_a2 = Item.create!(name: "Pants", description: "Good pants", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 2)
       item_b = Item.create!(name: "Lego Tree House", description: "Lego Set", unit_price: 100, merchant_id: merchant_b.id, status: "enabled", id: 3)
-      InvoiceItem.create!(item_id: item_a1.id, invoice_id: invoice_a.id, quantity: 12, unit_price: 100, status: 2, id: 1)
-      InvoiceItem.create!(item_id: item_a2.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 2)
-      InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 3)
+      invoice_item1 = InvoiceItem.create!(item_id: item_a1.id, invoice_id: invoice_a.id, quantity: 12, unit_price: 100, status: 2, id: 1)
+      invoice_item2 = InvoiceItem.create!(item_id: item_a2.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 2)
+      invoice_item3 = InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 3)
 
       visit merchant_invoice_path(merchant_a, invoice_a)
 
-      expect(page).to have_content("Discounted Revenue: $3,510.00")
+      expect(page).to have_content("Discounted Revenue: $35.10")
+    end
+
+    it 'has a link next to each invoice item with a link to the applicable discount' do
+      customer1 = Customer.create(first_name: "Mose", last_name: "Odell", id: 1)
+      merchant_a = Merchant.create(name: "The Gift Shop", id: 1)
+      merchant_b = Merchant.create(name: "Toy Store", id: 2)
+      bulk_discount_a = merchant_a.bulk_discounts.create!(name: "Discount A", percentage_discount: 20, quantity_threshold: 10)
+      bulk_discount_b = merchant_a.bulk_discounts.create!(name: "Discount B", percentage_discount: 30, quantity_threshold: 15)
+      invoice_a = Invoice.create!(customer_id: customer1.id, status: 1, id: 1)
+      item_a1 = Item.create!(name: "Hat", description: "Good hat", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 1)
+      item_a2 = Item.create!(name: "Pants", description: "Good pants", unit_price: 100, merchant_id: merchant_a.id, status: "enabled", id: 2)
+      item_b = Item.create!(name: "Lego Tree House", description: "Lego Set", unit_price: 100, merchant_id: merchant_b.id, status: "enabled", id: 3)
+      invoice_item1 = InvoiceItem.create!(item_id: item_a1.id, invoice_id: invoice_a.id, quantity: 12, unit_price: 100, status: 2, id: 1)
+      invoice_item2 = InvoiceItem.create!(item_id: item_a2.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 2)
+      invoice_item3 = InvoiceItem.create!(item_id: item_b.id, invoice_id: invoice_a.id, quantity: 15, unit_price: 100, status: 2, id: 3)
+
+      visit merchant_invoice_path(merchant_a, invoice_a)
+
+      expect(page).to have_link(bulk_discount_a.name, count: 1)
+      expect(page).to have_link(bulk_discount_b.name, count: 1)
     end
   end
 end

@@ -6,15 +6,17 @@ RSpec.describe 'Admin Invoice Show Page' do
   before do
     @customer = create(:customer)
 
+    @merchant = create(:merchant)
+    @bulk_discount = BulkDiscount.create!(name: "20% off", percentage_discount: 20, quantity_threshold: 5, merchant_id: @merchant.id)
     @item_1 = create(:item)
     @item_2 = create(:item)
     @item_3 = create(:item)
 
     @invoice = create(:invoice, customer_id: @customer.id)
 
-    @invoice_item_1 = create(:invoice_item, item_id: @item_1.id, invoice_id: @invoice.id, unit_price: 1)
-    @invoice_item_2 = create(:invoice_item, item_id: @item_2.id, invoice_id: @invoice.id, unit_price: 1)
-    @invoice_item_3 = create(:invoice_item, item_id: @item_3.id, invoice_id: @invoice.id, unit_price: 1)
+    @invoice_item_1 = create(:invoice_item, item_id: @item_1.id, invoice_id: @invoice.id, unit_price: 1, quantity: 5)
+    @invoice_item_2 = create(:invoice_item, item_id: @item_2.id, invoice_id: @invoice.id, unit_price: 1, quantity: 10)
+    @invoice_item_3 = create(:invoice_item, item_id: @item_3.id, invoice_id: @invoice.id, unit_price: 1, quantity: 1)
 
     visit admin_invoice_path(@invoice.id)
   end
@@ -73,5 +75,10 @@ RSpec.describe 'Admin Invoice Show Page' do
 
       expect(current_path).to eq(admin_invoice_path(@invoice))
     end
+  end
+
+  it 'displays the discounted revenue' do
+
+    expect(page).to have_content(@invoice.discount_revenue)
   end
 end
