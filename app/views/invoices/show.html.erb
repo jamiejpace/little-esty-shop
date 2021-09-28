@@ -15,8 +15,8 @@
       <p>Customer Name: <%= @invoice.customer.full_name %></p>
     </div>
     <div class="col border">
-      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue.fdiv(100)) %></p>
-      <p>Discounted Revenue: <%= number_to_currency(@invoice.discount_revenue.fdiv(100)) %></p>
+      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue.fdiv(100)) %> | 
+      Discounted Revenue: <%= number_to_currency(@invoice.discount_revenue.fdiv(100)) %></p>
     </div>
   </div>
 </div><br>
@@ -38,7 +38,7 @@
       <td><%= inv_item.item.name %></td>
       <td><%= inv_item.quantity %></td>
       <% if inv_item.highest_discount.nil? %>
-        <td>"No Discounts Applied"</td>
+        <td>No Discounts Applied</td>
       <% else %>
         <td><%= link_to "#{inv_item.highest_discount.name}", merchant_bulk_discount_path(@merchant, inv_item.highest_discount.id) %></td>
       <% end %>
