@@ -79,6 +79,6 @@ RSpec.describe 'Admin Invoice Show Page' do
 
   it 'displays the discounted revenue' do
 
-    expect(page).to have_content(@invoice.discount_revenue)
+    expect(page).to have_content(@invoice.invoice_items.discount_revenue)
   end
 end

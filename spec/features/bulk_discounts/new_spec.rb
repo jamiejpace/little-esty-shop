@@ -50,7 +50,7 @@ RSpec.describe 'bulk discount new page' do
   it 'autopopulates the holiday name when you click the create holiday discount link' do
     visit merchant_bulk_discounts_path(@merchant1)
 
-    click_link "Create #{@holiday1.name} Discount"
+    click_button "Create #{@holiday1.name} Discount"
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
 

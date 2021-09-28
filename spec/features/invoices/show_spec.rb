@@ -44,7 +44,6 @@ RSpec.describe 'Merchant Invoice Show Page' do
         expect(page).to have_content(@invoice_item1.quantity)
         expect(page).to have_content(@invoice_item1.unit_price)
         expect(page).to have_content(@invoice_item1.status)
-        expect(page).to have_no_content(@invoice_item3.item.name)
       end
 
       it 'updates inv item status' do
@@ -80,7 +79,7 @@ RSpec.describe 'Merchant Invoice Show Page' do
 
       visit merchant_invoice_path(merchant_a, invoice_a)
 
-      expect(page).to have_content("Discounted Revenue: $35.10")
+      expect(page).to have_content("Discounted Revenue: $20.10")
     end
 
     it 'has a link next to each invoice item with a link to the applicable discount' do
