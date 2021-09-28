@@ -33,8 +33,8 @@ RSpec.describe 'bulk discount index page' do
     expect(page).to have_content(@holiday1.name)
   end
 
-  it 'has a link to create a holiday discount next to each holiday' do
-    expect(page).to have_link("Create #{@holiday1.name} Discount")
+  it 'has a button to create a holiday discount next to each holiday' do
+    expect(page).to have_button("Create #{@holiday1.name} Discount")
   end
 
   it 'has a link to create a new merchant discount' do
