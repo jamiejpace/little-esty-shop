@@ -34,4 +34,14 @@ class InvoiceItem < ApplicationRecord
   def revenue_after_discount
     revenue * (1 - (highest_discount.percentage_discount.to_f / 100) )
   end
+
+  def self.discount_revenue
+    self.sum do |invoice_item|
+      if invoice_item.highest_discount
+        invoice_item.revenue_after_discount
+      else
+        invoice_item.revenue
+      end
+    end
+  end
 end

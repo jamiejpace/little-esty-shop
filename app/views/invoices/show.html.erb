@@ -15,8 +15,8 @@
       <p>Customer Name: <%= @invoice.customer.full_name %></p>
     </div>
     <div class="col border">
-      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue.fdiv(100)) %> | 
-      Discounted Revenue: <%= number_to_currency(@invoice.discount_revenue.fdiv(100)) %></p>
+      <p>Total Revenue: <%= number_to_currency(@invoice.total_revenue.fdiv(100)) %> |
+      Discounted Revenue: <%= number_to_currency(@invoice_items.discount_revenue.fdiv(100)) %></p>
     </div>
   </div>
 </div><br>

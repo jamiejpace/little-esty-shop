@@ -11,6 +11,6 @@
 
 <h3>Upcoming Holidays</h3><br>
 <% @holidays.each do |holiday| %>
-  <p><%= holiday.name %>
+  <p><%= holiday.name %>- Date: <%= holiday.date.to_date.strftime("%B %d, %Y") %>
   <%= button_to "Create #{holiday.name} Discount", new_merchant_bulk_discount_path(@merchant), method: :get, params: {name: holiday.name} %></p>
 <% end %>
