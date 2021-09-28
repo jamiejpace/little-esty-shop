@@ -22,7 +22,7 @@ RSpec.describe 'bulk discount new page' do
     click_button 'Submit'
 
     @merchant1.reload
-    
+
     expect(current_path).to eq(merchant_bulk_discounts_path(@merchant1))
     expect(page).to have_content("Discount Percentage: 20")
     expect(page).to have_content("The Big Discount")
@@ -45,5 +45,15 @@ RSpec.describe 'bulk discount new page' do
 
     expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
     expect(page).to have_content("Unable to Create New Discount - Please Try Again")
+  end
+
+  it 'autopopulates the holiday name when you click the create holiday discount link' do
+    visit merchant_bulk_discounts_path(@merchant1)
+
+    click_link "Create #{@holiday1.name} Discount"
+
+    expect(current_path).to eq(new_merchant_bulk_discount_path(@merchant1))
+
+    expect(page).to have_field('Name', with: @holiday1.name)
   end
 end

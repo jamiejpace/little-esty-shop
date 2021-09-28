@@ -13,6 +13,7 @@ class BulkDiscountsController < ApplicationController
   end
 
   def new
+    @name = params[:name]
   end
 
   def create
